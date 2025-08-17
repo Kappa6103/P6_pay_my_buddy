@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `mydb`.`user_transaction` (
+  `transactionId` INT NOT NULL AUTO_INCREMENT,
+  `sendUserId` INT NOT NULL,
+  `receiverUserId` INT NOT NULL,
+  `description` VARCHAR(255) NULL,
+  `amount` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`transactionId`),
+  INDEX `fk_user_transaction_user1_idx` (`sendUserId` ASC) VISIBLE,
+  INDEX `fk_user_transaction_user2_idx` (`receiverUserId` ASC) VISIBLE,
+  CONSTRAINT `fk_user_transaction_user1`
+    FOREIGN KEY (`sendUserId`)
+    REFERENCES `mydb`.`user` (`userId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_transaction_user2`
+    FOREIGN KEY (`receiverUserId`)
+    REFERENCES `mydb`.`user` (`userId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
