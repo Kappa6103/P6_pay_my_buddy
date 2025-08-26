@@ -15,7 +15,7 @@ public class Account {
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
-    private User user;
+    private AppUser user;
 
     private BigDecimal balance;
 
@@ -31,11 +31,11 @@ public class Account {
         this.userId = userId;
     }
 
-    public User getUser() {
+    public AppUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(AppUser user) {
         this.user = user;
     }
 

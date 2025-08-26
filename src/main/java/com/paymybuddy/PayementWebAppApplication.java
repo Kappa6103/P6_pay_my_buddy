@@ -1,7 +1,5 @@
 package com.paymybuddy;
 
-import com.paymybuddy.model.Account;
-import com.paymybuddy.model.User;
 import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +21,6 @@ public class PayementWebAppApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user = new User();
-		user.setUserName("username");
-		user.setAccount(new Account());
-		user.setEmail("email");
-		user.setPassword("password");
 
-		user = userService.addUser(user);
 	}
 }

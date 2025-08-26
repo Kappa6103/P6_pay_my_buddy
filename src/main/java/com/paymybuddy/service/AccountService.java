@@ -1,7 +1,7 @@
 package com.paymybuddy.service;
 
 import com.paymybuddy.model.Account;
-import com.paymybuddy.model.User;
+import com.paymybuddy.model.AppUser;
 import com.paymybuddy.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public Optional<Account> getAccountByUser(User user) {
+    public Optional<Account> getAccountByUser(AppUser user) {
         return accountRepository.findByUser(user);
     }
 

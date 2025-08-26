@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class User {
 
     private String password;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @PrimaryKeyJoinColumn
     private Account account;
 
@@ -31,7 +31,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_1_id"),
             inverseJoinColumns = @JoinColumn(name = "user_2_id")
     )
-    List<User> friendsList = new ArrayList<>();
+    List<AppUser> friendsList = new ArrayList<>();
 
 
     //Getters and setters

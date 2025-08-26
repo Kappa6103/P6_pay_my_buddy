@@ -1,6 +1,6 @@
 package com.paymybuddy.service;
 
-import com.paymybuddy.model.User;
+import com.paymybuddy.model.AppUser;
 import com.paymybuddy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,15 +13,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User addUser(User user) {
+    public AppUser addUser(AppUser user) {
         return userRepository.save(user);
     }
 
-    public Optional<User> getUserById(int id) {
+    public Optional<AppUser> getUserById(int id) {
         return userRepository.findById(id);
     }
 
-    public void deleteUser(User user) {
+    public void deleteUser(AppUser user) {
         userRepository.delete(user);
     }
 

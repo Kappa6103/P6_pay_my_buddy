@@ -15,11 +15,11 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
-    private User sender;
+    private AppUser sender;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id", nullable = false)
-    private User receiver;
+    private AppUser receiver;
 
     private String description;
 
@@ -37,19 +37,19 @@ public class Transaction {
         this.transactionId = transactionId;
     }
 
-    public User getSender() {
+    public AppUser getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(AppUser sender) {
         this.sender = sender;
     }
 
-    public User getReceiver() {
+    public AppUser getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(User receiver) {
+    public void setReceiver(AppUser receiver) {
         this.receiver = receiver;
     }
 
