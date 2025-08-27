@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -9,7 +9,20 @@
 
 <body>
     <h1>Profile page</h1>
+    <header>
+        <nav>
+            <div>
+                <a href="transfert">Transférer</a>
+                <a href="profil">Profil</a>
+                <a href="ajouter_relation">Ajouter relation</a>
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <button>Se deconnecter</button>
+                </form>
+            </div>
+        </nav>
 
+
+    </header>
 </body>
 
 </html>

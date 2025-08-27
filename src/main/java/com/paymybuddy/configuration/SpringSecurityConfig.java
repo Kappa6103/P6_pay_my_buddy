@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.Scanner;
+
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
@@ -56,6 +58,11 @@ public class SpringSecurityConfig {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider(userService);
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
+    }
+
+    @Bean
+    public Scanner scanner() {
+        return new Scanner(System.in);
     }
 
 }

@@ -29,6 +29,10 @@ public class UserService implements UserDetailsService {
         userRepository.delete(user);
     }
 
+    public void deleteUserById(int userId) {
+        userRepository.deleteById(userId);
+    }
+
     public AppUser getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
