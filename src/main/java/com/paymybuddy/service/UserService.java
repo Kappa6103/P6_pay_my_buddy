@@ -21,6 +21,10 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    public AppUser saveUser(AppUser user) {
+        return userRepository.save(user);
+    }
+
     public Optional<AppUser> getUserById(int id) {
         return userRepository.findById(id);
     }

@@ -37,6 +37,14 @@ public class AppUser {
     //Getters and setters
 
 
+    public List<AppUser> getFriendsList() {
+        return friendsList;
+    }
+
+    public void setFriendsList(List<AppUser> friendsList) {
+        this.friendsList = friendsList;
+    }
+
     public Account getAccount() {
         return account;
     }

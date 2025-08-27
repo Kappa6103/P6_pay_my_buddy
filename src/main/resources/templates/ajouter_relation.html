@@ -9,6 +9,30 @@
 
 <body>
     <h1>ajouter relation page</h1>
+    <nav>
+        <div>
+            <a href="transfert">Transférer</a>
+            <a href="profil">Profil</a>
+            <a href="ajouter_relation">Ajouter relation</a>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button>Se deconnecter</button>
+            </form>
+        </div>
+    </nav>
+    <hr />
+    <div>Chercher une relation</div>
+    <form method="post" th:action="@{/ajouter_relation}" th:object="${addRelationDto}">
+        <div>
+            <input th:field="${addRelationDto.email}">
+            <p th:if="${#fields.hasErrors('email')}"
+               th:errorclass="text-danger"
+               th:errors="${addRelationDto.email}"></p>
+        </div>
+        <div>
+            <button>Ajouter</button>
+        </div>
+    </form>
+
 
 </body>
 
