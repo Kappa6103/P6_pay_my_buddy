@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="fr">
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
@@ -9,18 +9,22 @@
 </head>
 
 <body>
-  <div class="login-container">
-    <div class="login-box">
-      <button class="logo-btn">Pay My Buddy</button>
-
-      <form>
-        <input type="email" placeholder="Mail" required>
-        <input type="password" placeholder="Mot de passe" required>
-        <button type="submit">Se connecter</button>
-      </form>
-
+  <h1>Please Log In</h1>
+  <div th:if="${param.error}">
+    Invalid username and password.</div>
+  <div th:if="${param.logout}">
+    You have been logged out.</div>
+  <form th:action="@{/connexion}" method="post">
+    <div>
+      <input type="text" name="email" placeholder="Email"/>
     </div>
-  </div>
+    <div>
+    <input type="password" name="password" placeholder="Password"/>
+    </div>
+    <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
+    <input type="submit" value="Log in" />
+</form>
+
 </body>
 
 </html>
