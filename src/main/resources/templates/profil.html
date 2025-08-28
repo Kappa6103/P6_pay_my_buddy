@@ -21,6 +21,41 @@
             </div>
         </nav>
 
+        <div>
+            <form method="post" th:object="${modifyProfileDto}" th:action="@{/profil}">
+                <label>Username</label>
+                <div>
+                    <input th:field="${modifyProfileDto.userName}">
+                    <p th:if="${#fields.hasErrors('userName')}"
+                       th:errorclass="text-danger"
+                       th:errors="${modifyProfileDto.userName}"></p>
+                </div>
+
+                <label>Mail</label>
+                <div>
+                    <input th:field="${modifyProfileDto.email}">
+                    <p th:if="${#fields.hasErrors('email')}"
+                       th:errorclass="text-danger"
+                       th:errors="${modifyProfileDto.email}"></p>
+                </div>
+
+                <label>Password</label>
+                <div>
+                    <input class="form-control" type="password"
+                           th:field="${modifyProfileDto.password}">
+                    <p th:if="${#fields.hasErrors('password')}"
+                       th:errorclass="text-danger"
+                       th:errors="${modifyProfileDto.password}"></p>
+                </div>
+
+                <div>
+                    <button type="submit">Modifier</button>
+                </div>
+
+            </form>
+
+        </div>
+
 
     </header>
 </body>

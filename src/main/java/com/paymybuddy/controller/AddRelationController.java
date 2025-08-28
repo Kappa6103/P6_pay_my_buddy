@@ -2,7 +2,6 @@ package com.paymybuddy.controller;
 
 import com.paymybuddy.model.AppUser;
 import com.paymybuddy.model.dto.AddRelationDto;
-import com.paymybuddy.model.dto.RegisterDto;
 import com.paymybuddy.service.UserService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -18,9 +17,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Objects;
-
+//TODO : garder la meme typologies de noms.
 @Controller
-public class AddRelation {
+public class AddRelationController {
 
     @Autowired
     UserService userService;
@@ -76,7 +75,7 @@ public class AddRelation {
             return "ajouter_relation";
         }
 
-        try {
+        try { //TODO : faire une demande d'ami plutot ?
             currentUser.getFriendsList().add(friendToAdd);
             userService.saveUser(currentUser);
 
