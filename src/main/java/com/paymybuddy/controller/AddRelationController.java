@@ -38,6 +38,7 @@ public class AddRelationController {
             @Valid @ModelAttribute AddRelationDto addRelationDto,
             BindingResult result
     ) {
+        //TODO: TO REFACTOR USING THE SERVICE METHOD
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserEmail = authentication.getName();
         AppUser currentUser = userService.getUserByEmail(currentUserEmail);

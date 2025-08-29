@@ -43,7 +43,7 @@ public class ProfilController {
     ) {
 
         boolean hasAFieldBeenModified = false;
-
+        //TODO: TO REFACTOR TO USE THE SERVICE METHOD
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserEmail = authentication.getName();
         AppUser currentUser = userService.getUserByEmail(currentUserEmail);

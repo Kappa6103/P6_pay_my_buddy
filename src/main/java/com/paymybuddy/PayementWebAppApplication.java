@@ -39,19 +39,21 @@ public class PayementWebAppApplication implements CommandLineRunner {
 //		}
 
 
-		while (true) {
+//		while (true) {
+//
+//			System.out.println("What is the user to delete ? enter its Id or 99 to exit");
+//
+//			int userId = scanner.nextInt();
+//
+//			if (userId != 99) {
+//				userService.deleteUserById(userId);
+//
+//			} else {
+//				break;
+//			}
+//		}
 
-			System.out.println("What is the user to delete ? enter its Id or 99 to exit");
-
-			int userId = scanner.nextInt();
-
-			if (userId != 99) {
-				userService.deleteUserById(userId);
-
-			} else {
-				break;
-			}
-		}
+		//TODO : validation of inputs, regarding the varchar(255) limitation in the DB
 
 
 	}
