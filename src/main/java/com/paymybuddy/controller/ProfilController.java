@@ -2,6 +2,7 @@ package com.paymybuddy.controller;
 
 import com.paymybuddy.model.AppUser;
 import com.paymybuddy.model.dto.ModifyProfileDto;
+import com.paymybuddy.model.dto.RegisterDto;
 import com.paymybuddy.service.UserService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -51,28 +52,27 @@ public class ProfilController {
             return "profil";
         }
 
-        if (modifyProfileDto.getUserName().isPresent()) {
-            String newUserName = modifyProfileDto.getUserName().get();
-            currentUser.setUserName(newUserName);
+        if (modifyProfileDto.getUserName() != null && !modifyProfileDto.getUserName().isBlank()) {
+            currentUser.setUserName(modifyProfileDto.getUserName());
             hasAFieldBeenModified = true;
         }
 
-        if (modifyProfileDto.getEmail().isPresent()) {
-            String newEmail = modifyProfileDto.getEmail().get();
-            currentUser.setEmail(newEmail);
+        if (modifyProfileDto.getEmail() != null && !modifyProfileDto.getEmail().isBlank()) {
+            currentUser.setEmail(modifyProfileDto.getEmail());
             hasAFieldBeenModified = true;
         }
 
-        if (modifyProfileDto.getPassword().isPresent()) {
-            currentUser.setPassword(passwordEncoder.encode(
-                    modifyProfileDto.getPassword().get()
-            ));
+        if (modifyProfileDto.getPassword() != null && !modifyProfileDto.getPassword().isBlank()) {
+            currentUser.setPassword(passwordEncoder.encode(modifyProfileDto.getPassword()));
+            hasAFieldBeenModified = true;
         }
 
         if (hasAFieldBeenModified) {
             userService.saveUser(currentUser);
         }
-
+        //TODO: clearing the DTO
+        model.addAttribute("modifyProfileDto", new ModifyProfileDto());
+        model.addAttribute("success", true);
         return "profil";
     }
 }

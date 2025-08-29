@@ -4,8 +4,6 @@ import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
-import java.util.Optional;
-
 public class ModifyProfileDto {
 
     @Nullable
@@ -14,32 +12,35 @@ public class ModifyProfileDto {
     @Nullable
     @Email
     private String email;
-
+    //TODO : sometime the form ask for an input, correct behavior is blank is ok
     @Nullable
     @Size(min = 6, message = "Minimum Password length is 6 characters")
     private String password;
 
-    public Optional<String> getUserName() {
-        return Optional.ofNullable(userName);
+    @Nullable
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserName(String userName) {
+    public void setUserName(@Nullable String userName) {
         this.userName = userName;
     }
 
-    public Optional<String> getEmail() {
-        return Optional.ofNullable(email);
+    @Nullable
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(@Nullable String email) {
         this.email = email;
     }
 
-    public Optional<String> getPassword() {
-        return Optional.ofNullable(password);
+    @Nullable
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(@Nullable String password) {
         this.password = password;
     }
 }

@@ -1,5 +1,6 @@
 package com.paymybuddy;
 
+import com.paymybuddy.model.AppUser;
 import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -26,19 +28,30 @@ public class PayementWebAppApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-//		while (true) {
+//		Optional<AppUser> optAppUser = userService.getUserById(18);
 //
-//			System.out.println("What is the user to delete ? enter its Id or 99 to exit");
+//		AppUser appUser;
+//		if (optAppUser.isPresent()) {
+//			appUser = optAppUser.get();
+//			appUser.setEmail("salut@gmail.com");
 //
-//			int userId = scanner.nextInt();
-//
-//			if (userId != 99) {
-//				userService.deleteUserById(userId);
-//
-//			} else {
-//				break;
-//			}
+//			userService.saveUser(appUser);
 //		}
+
+
+		while (true) {
+
+			System.out.println("What is the user to delete ? enter its Id or 99 to exit");
+
+			int userId = scanner.nextInt();
+
+			if (userId != 99) {
+				userService.deleteUserById(userId);
+
+			} else {
+				break;
+			}
+		}
 
 
 	}
