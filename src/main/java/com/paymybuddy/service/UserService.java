@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,8 +27,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    //TODO refactor class to avoid Lazy annotation
-    @Lazy
     @Autowired
     private TransactionService transactionService;
 
@@ -81,6 +78,8 @@ public class UserService implements UserDetailsService {
     public TransactionDto loadTransactionDto() {
         TransactionDto transactionDto = new TransactionDto();
         AppUser appUser = getCurrentUser();
+        transactionDto.setSenderId(appUser.getUserId());
+
         //TODO : IS IT OK, ASK YANNICK, have to deal with null value for field receiverId when friendList is empty
         if (appUser.getFriendsList().isEmpty()) {
             transactionDto.setRelationList(Collections.emptyList());

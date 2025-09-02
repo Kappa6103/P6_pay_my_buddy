@@ -11,6 +11,8 @@ public class TransactionDto {
 
     private List<TransactionHistoryDto> transactionHistory;
 
+    private Integer senderId;
+
     private Integer receiverId;
 
     private String description;
@@ -18,6 +20,14 @@ public class TransactionDto {
     @NotNull(message = "Transaction amount cannot be null")
     @Positive(message = "Transaction amount must be at least one Euro")
     private Integer transactionAmount;
+
+    public Integer getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(Integer senderId) {
+        this.senderId = senderId;
+    }
 
     public List<TransactionHistoryDto> getTransactionHistory() {
         return transactionHistory;

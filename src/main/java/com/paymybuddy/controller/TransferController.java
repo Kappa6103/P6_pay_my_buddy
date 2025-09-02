@@ -1,8 +1,10 @@
 package com.paymybuddy.controller;
 
+import com.paymybuddy.model.AppUser;
 import com.paymybuddy.model.Transaction;
 import com.paymybuddy.model.dto.RegisterDto;
 import com.paymybuddy.model.dto.TransactionDto;
+import com.paymybuddy.model.dto.TransactionHistoryDto;
 import com.paymybuddy.service.TransactionService;
 import com.paymybuddy.service.UserService;
 import jakarta.validation.Valid;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class TransferController {
 
@@ -23,6 +27,7 @@ public class TransferController {
     @Autowired
     TransactionService transactionService;
 
+    //TODO : ASK YANNICK, J'ENVOI AVEC SENDERID
     @GetMapping("/transfert")
     public String transfer(Model model) {
         TransactionDto transactionDto = userService.loadTransactionDto();
@@ -37,7 +42,9 @@ public class TransferController {
             @Valid @ModelAttribute TransactionDto transactionDto,
             BindingResult result
     ) {
-        Transaction transaction = transactionService.createTransaction(transactionDto);
+        AppUser sender = userService.getUserById(transactionDto.getSenderId());
+        AppUser receiver = userService.getUserById(transactionDto.getReceiverId());
+        Transaction transaction = transactionService.createTransaction(transactionDto, sender, receiver);
         transactionService.processTransaction(transaction);
         //TODO : display should say when the transaction was successful
 
