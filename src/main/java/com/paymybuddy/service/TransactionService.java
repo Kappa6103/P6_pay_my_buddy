@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,6 +28,10 @@ public class TransactionService {
 
     public Optional<Transaction> getTransaction(int id) {
         return transactionRepository.findById(id);
+    }
+
+    public List<Transaction> getTransactionsByUser(AppUser sender) {
+        return transactionRepository.findAllBySender(sender);
     }
 
     public void deleteTransaction(Transaction transaction) {

@@ -36,7 +36,27 @@
                 </form>
             </div>
         </div>
-        
+
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <th>Relations</th>
+                    <th>Description</th>
+                    <th>Montant</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="transaction : ${transactionDto.getTransactionHistory()}">
+                    <td th:text="${transaction.userName()}">user name</td>
+                    <td th:text="${transaction.description()}">description</td>
+                    <td th:text="${transaction.transactionAmount}">100</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
     </nav>
 
 </body>
