@@ -1,5 +1,6 @@
 package com.paymybuddy.service;
 
+import com.paymybuddy.model.AppUser;
 import com.paymybuddy.model.Transaction;
 import com.paymybuddy.model.dto.TransactionDto;
 import com.paymybuddy.repository.TransactionRepository;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -31,15 +33,45 @@ public class TransactionService {
         transactionRepository.delete(transaction);
     }
 
+    //TODO : how can i make it fail ?
     @Transactional
-    public boolean createTransaction(@Valid TransactionDto transactionDto) {
+    public Transaction createTransaction(@Valid TransactionDto transactionDto) {
         Transaction transaction = new Transaction();
         //TODO : ASK YANNICK, IS IT THE CORRECT WAY TO DO IT ? OR SHOULD BE INCLUDED IN THE DTO ?
         transaction.setSender(userService.getCurrentUser());
-        
-        transaction.setReceiver(userService.getUserById(transactionDto.getReceiver().userId()).get());
 
+        Optional<AppUser> optReceiver = userService.getUserById(transactionDto.getReceiverId());
+        if (optReceiver.isPresent()) {
+            AppUser receiver = optReceiver.get();
+            transaction.setReceiver(receiver);
+        } else { //TODO : SAME HERE, IS IT THE RIGHT WAY TO DO IT ?
+            throw new RuntimeException();
+        }
 
-        return false;
+        if (!transactionDto.getDescription().isBlank()) {
+            transaction.setDescription(transactionDto.getDescription());
+        }
+
+        transaction.setAmount(BigDecimal.valueOf(transactionDto.getTransactionAmount()));
+
+        transaction = addTransaction(transaction);
+
+        return transaction;
+    }
+
+    public void processTransaction(Transaction transaction) {
+        AppUser sender = transaction.getSender();
+        AppUser receiver = transaction.getReceiver();
+
+        BigDecimal transactionValue = transaction.getAmount();
+
+        BigDecimal initialValueOfSenderAccount = sender.getAccount().getBalance();
+        BigDecimal initialValueOfReceiverAccount = receiver.getAccount().getBalance();
+
+        sender.getAccount().setBalance(initialValueOfSenderAccount.subtract(transactionValue));
+        receiver.getAccount().setBalance(initialValueOfReceiverAccount.add(transactionValue));
+
+        userService.saveUser(sender);
+        userService.saveUser(receiver);
     }
 }

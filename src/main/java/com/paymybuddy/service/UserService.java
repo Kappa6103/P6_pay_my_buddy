@@ -62,6 +62,7 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
+    //TODO : should it throw an error if fail ??
     public AppUser getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return getUserByEmail(authentication.getName());

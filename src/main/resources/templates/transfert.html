@@ -18,29 +18,25 @@
                 <button>Se deconnecter</button>
             </form>
         </div>
-        <form th:action="@{/transfert}" method="post" th:object="${transactionDto}">
-            <select name="connectionId" class="form-select" required>
-                <option value="" selected disabled>Sélectionner une relation</option>
-                <li th:each="connection : ${transactionDto.relationList}">
-                    <option th:value="${connection.userId}"
-                            th:text="${connection.userName}">Connection Name</option>
-                </li>
-            </select>
-            <div>
-                <label>Description</label>
-                <input th:field="${transactionDto.description}">
-                <p th:if="${#fields.hasErrors('description')}"
-                   th:errorclass="text-danger"
-                   th:errors="${transactionDto.description}"></p>
-            </div>
-            <div>
-                <input type="number" name="quantity" value="1" min="1" max="10000" step="1"
-                th:field="*{transactionAmount}">
-            </div>
-            <button type="submit">Payer</button>
-        </form>
 
-
+        <div align="center">
+            <div style="border-style:solid; width:500px">
+                <h1>Transaction Form</h1>
+                <form role="form" method="post" th:action="@{/transfert}" th:object="${transactionDto}">
+                    <label>Friends List:</label>
+                    <select th:field="*{receiverId}">
+                        <option th:each="relation : *{relationList}" th:value="${relation.userId()}" th:text="${relation.userName()}">User Connection</option>
+                    </select>
+                    <label>Description:</label>
+                    <input th:field="*{description}">
+                    <label>Montant</label>
+                    <input type="number" name="quantity" value="1" min="1" max="10000" step="1"
+                           th:field="*{transactionAmount}">
+                    <button type="submit">Payer</button>
+                </form>
+            </div>
+        </div>
+        
     </nav>
 
 </body>

@@ -9,7 +9,7 @@ public class TransactionDto {
 
     private List<AppUserNameAndId> relationList;
 
-    private AppUserNameAndId receiver;
+    private Integer receiverId;
 
     private String description;
 
@@ -25,12 +25,12 @@ public class TransactionDto {
         this.relationList = relationList;
     }
 
-    public AppUserNameAndId getReceiver() {
-        return receiver;
+    public Integer getReceiverId() {
+        return receiverId;
     }
 
-    public void setReceiver(AppUserNameAndId receiver) {
-        this.receiver = receiver;
+    public void setReceiverId(Integer receiverId) {
+        this.receiverId = receiverId;
     }
 
     public String getDescription() {

@@ -1,5 +1,7 @@
 package com.paymybuddy.controller;
 
+import com.paymybuddy.model.Transaction;
+import com.paymybuddy.model.dto.RegisterDto;
 import com.paymybuddy.model.dto.TransactionDto;
 import com.paymybuddy.service.TransactionService;
 import com.paymybuddy.service.UserService;
@@ -24,7 +26,7 @@ public class TransferController {
     @GetMapping("/transfert")
     public String transfer(Model model) {
         TransactionDto transactionDto = userService.loadTransactionDto();
-        model.addAttribute(transactionDto);
+        model.addAttribute("transactionDto", transactionDto);
 
         return "/transfert";
     }
@@ -35,8 +37,12 @@ public class TransferController {
             @Valid @ModelAttribute TransactionDto transactionDto,
             BindingResult result
     ) {
-        transactionService.createTransaction(transactionDto);
+        Transaction transaction = transactionService.createTransaction(transactionDto);
+        transactionService.processTransaction(transaction);
         //TODO : display should say when the transaction was successful
+
+        model.addAttribute("transactionDto", userService.loadTransactionDto());
+        model.addAttribute("success", true);
         return "transfert";
     }
 }
