@@ -6,6 +6,7 @@ import com.paymybuddy.model.Transaction;
 import com.paymybuddy.model.dto.TransactionDto;
 import com.paymybuddy.model.dto.TransactionHistoryDto;
 import com.paymybuddy.repository.TransactionRepository;
+import com.paymybuddy.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,13 @@ import java.util.Optional;
 public class TransactionService {
 
     @Autowired
+    AccountService accountService;
+
+    @Autowired
     TransactionRepository transactionRepository;
 
     @Autowired
-    AccountService accountService;
+    UserRepository userRepository;
 
     public Transaction addTransaction(Transaction transaction) {
         return transactionRepository.save(transaction);
@@ -45,7 +49,25 @@ public class TransactionService {
     public Transaction createTransaction(@Valid TransactionDto transactionDto) {
         Transaction transaction = new Transaction();
 
-        transaction.setSender(transactionDto.getSenderId());
+        Optional<AppUser> optSender = userRepository.findById(transactionDto.getSenderId());
+        Optional<AppUser> optReceiver = userRepository.findById(transactionDto.getReceiverId());
+
+        AppUser sender = null;
+        AppUser receiver = null;
+
+        if (optSender.isPresent()) {
+            sender = optSender.get();
+        } else {
+            throw new RuntimeException();
+        }
+
+        if (optReceiver.isPresent()) {
+            receiver = optReceiver.get();
+        } else {
+            throw new RuntimeException();
+        }
+
+        transaction.setSender(sender);
         transaction.setReceiver(receiver);
 
         if (!transactionDto.getDescription().isBlank()) {
@@ -75,6 +97,7 @@ public class TransactionService {
         accountService.addAccount(receiverAccount);
     }
 
+    //TODO: FINISH THIS
     public List<TransactionHistoryDto> getTransactionHistoryDtoByUser(AppUser appUser) {
     }
 }
