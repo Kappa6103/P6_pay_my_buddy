@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Size;
 
 public class ModifyProfileDto {
 
+    private int currentUserId;
+
     private String userName;
 
     @Email
@@ -12,6 +14,10 @@ public class ModifyProfileDto {
 
     @Size(min = 6, message = "Minimum Password length is 6 characters")
     private String password;
+
+    public ModifyProfileDto(int currentUserId) {
+        this.currentUserId = currentUserId;
+    }
 
     public String getUserName() {
         return userName;
@@ -35,5 +41,9 @@ public class ModifyProfileDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getCurrentUserId() {
+        return currentUserId;
     }
 }

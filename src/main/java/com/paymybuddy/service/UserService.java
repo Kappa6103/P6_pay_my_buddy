@@ -73,7 +73,7 @@ public class UserService implements UserDetailsService {
         return User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())
-                .roles("USER") //should i implement role in user class ?
+                .roles("USER") //TODO: Roles should be an Enum type
                 .build();
     }
 
@@ -207,5 +207,41 @@ public class UserService implements UserDetailsService {
 
         friendToAdd.getFriendsList().add(currentUser);
         userRepository.save(friendToAdd);
+    }
+
+    public ModifyProfileDto loadModifyProfileDto() {
+        return new ModifyProfileDto(getCurrentUser().getUserId());
+    }
+
+    public void modifyUserProfile(@Valid ModifyProfileDto modifyProfileDto) {
+        Optional<AppUser> optCurrentUser = userRepository.findById(modifyProfileDto.getCurrentUserId());
+
+        AppUser currentUser = null;
+
+        if (optCurrentUser.isPresent()) {
+            currentUser = optCurrentUser.get();
+        } else {
+            throw new RuntimeException();
+        }
+
+        if (modifyProfileDto.getUserName() != null
+                && !modifyProfileDto.getUserName().isBlank()) {
+            currentUser.setUserName(modifyProfileDto.getUserName());
+
+        }
+
+        if (modifyProfileDto.getEmail() != null
+                && !modifyProfileDto.getEmail().isBlank()) {
+            currentUser.setEmail(modifyProfileDto.getEmail());
+
+        }
+
+        if (modifyProfileDto.getPassword() != null
+                && !modifyProfileDto.getPassword().isBlank()) {
+            currentUser.setPassword(passwordEncoder.encode(modifyProfileDto.getPassword()));
+        }
+
+        userRepository.save(currentUser);
+
     }
 }

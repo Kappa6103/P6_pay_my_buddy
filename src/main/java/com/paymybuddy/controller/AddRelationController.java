@@ -71,6 +71,7 @@ public class AddRelationController {
             return "ajouter_relation";
         }
 
+        //TODO: inject new dto
         userService.createUserRelation(addRelationDto);
         model.addAttribute("success", true);
 

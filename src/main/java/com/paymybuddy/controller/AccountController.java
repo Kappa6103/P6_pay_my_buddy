@@ -51,7 +51,7 @@ public class AccountController {
         //Create a new account
         userService.createNewUser(registerDto);
         //Return clear the register Dto for and tell the webpage it's a success.
-        model.addAttribute("registerDto", new RegisterDto());
+        model.addAttribute("registerDto", userService.loadRegisterDto());
         model.addAttribute("success", true);
 
         return "inscription";
