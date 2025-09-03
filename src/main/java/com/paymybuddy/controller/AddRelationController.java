@@ -1,13 +1,9 @@
 package com.paymybuddy.controller;
 
-import com.paymybuddy.model.AppUser;
 import com.paymybuddy.model.dto.AddRelationDto;
 import com.paymybuddy.service.UserService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,13 +13,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Objects;
-//TODO : garder la meme typologies de noms.
+
 @Controller
 public class AddRelationController {
 
     @Autowired
     UserService userService;
 
+    //TODO: should add an attribute for succes/failure of the form
     @GetMapping("/ajouter_relation")
     public String addRelation(Model model) {
         AddRelationDto addRelationDto = userService.loadAddRelationDto();
@@ -32,21 +29,15 @@ public class AddRelationController {
     }
 
     @PostMapping("/ajouter_relation")
-    @Transactional
     public String addingRelation(
             Model model,
             @Valid @ModelAttribute AddRelationDto addRelationDto,
             BindingResult result
     ) {
-        //TODO: TO REFACTOR USING THE SERVICE METHOD
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserEmail = authentication.getName();
-        AppUser currentUser = userService.getUserByEmail(currentUserEmail);
 
-        //Utiliser un Optional plutot ?
-        AppUser friendToAdd = userService.getUserByEmail(addRelationDto.getEmail());
+        boolean isFriendToAddPresentInDDB = userService.verifyPresenceOfEmailInDDB(addRelationDto.getEmail());
 
-        if (friendToAdd == null) {
+        if (!isFriendToAddPresentInDDB) {
             result.addError(
                     new FieldError("addRelationDto", "email",
                             "L'utilisateur n'existe pas")
@@ -54,7 +45,7 @@ public class AddRelationController {
             return "ajouter_relation";
         }
 
-        if (Objects.equals(currentUserEmail, addRelationDto.getEmail())) {
+        if (Objects.equals(addRelationDto.getCurrentUserEmail(), addRelationDto.getEmail())) {
             result.addError(
                     new FieldError(
                             "addRelationDto", "email",
@@ -64,7 +55,11 @@ public class AddRelationController {
             return "ajouter_relation";
         }
 
-        if (currentUser.getFriendsList().contains(friendToAdd)) {
+        boolean isFriendToAddAlreadyInFriendList = userService.verifyPresenceOfFriendToAddInUserFriendList(
+                addRelationDto.getCurrentUserId(),
+                addRelationDto.getEmail());
+
+        if (isFriendToAddAlreadyInFriendList) {
             result.addError(
                     new FieldError("addRelationDto", "email",
                             "Cette personne est deja dans votre liste d'amis")
@@ -76,22 +71,9 @@ public class AddRelationController {
             return "ajouter_relation";
         }
 
-        try { //TODO : faire une demande d'ami plutot ?
-            currentUser.getFriendsList().add(friendToAdd);
-            userService.saveUser(currentUser);
+        userService.createUserRelation(addRelationDto);
+        model.addAttribute("success", true);
 
-            friendToAdd.getFriendsList().add(currentUser);
-            userService.saveUser(friendToAdd);
-
-            model.addAttribute("success", true);
-
-
-        } catch (Exception e) {
-            result.addError(
-                    new FieldError("addRelationDto", "email",
-                            "Erreur lors de l'ajout" + e.getMessage())
-            );
-        }
         return "ajouter_relation";
     }
 

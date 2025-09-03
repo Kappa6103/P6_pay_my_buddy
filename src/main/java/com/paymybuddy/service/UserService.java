@@ -43,10 +43,6 @@ public class UserService implements UserDetailsService {
         return new RegisterDto();
     }
 
-    public AppUser addUser(AppUser user) {
-        return userRepository.save(user);
-    }
-
     public AppUser saveUser(AppUser user) {
         return userRepository.save(user);
     }
@@ -81,7 +77,6 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-    //TODO : should it throw an error if fail ??
     public AppUser getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return getUserByEmail(authentication.getName());
@@ -122,7 +117,16 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean verifyPresenceOfEmailInDDB(String email) {
-        AppUser appUser= userRepository.findByEmail(email);
+        AppUser appUser = userRepository.findByEmail(email);
+        if (appUser == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean verifyPresenceOfUserToAdd(String email) {
+        AppUser appUser = userRepository.findByEmail(email);
         if (appUser == null) {
             return false;
         } else {
@@ -152,6 +156,56 @@ public class UserService implements UserDetailsService {
     }
 
     public AddRelationDto loadAddRelationDto() {
-        return new AddRelationDto();
+        AppUser appUser = getCurrentUser();
+        return new AddRelationDto(appUser.getUserId(), appUser.getEmail());
+    }
+
+    //TODO : ASK YANNICK comment gere les nulls, isEmpty() here
+    public boolean verifyPresenceOfFriendToAddInUserFriendList(int currentUserId, String email) {
+        Optional<AppUser> optCurrentUser = userRepository.findById(currentUserId);
+        Optional<AppUser> optFriendToAdd = userRepository.findByEmail(email);
+
+        AppUser currentUser = null;
+        AppUser friendToAdd = null;
+
+        if (optCurrentUser.isPresent()) {
+            currentUser = optCurrentUser.get();
+        } else {
+            throw new RuntimeException();
+        }
+
+        if (optFriendToAdd.isPresent()) {
+            friendToAdd = optFriendToAdd.get();
+        } else {
+            throw new RuntimeException();
+        }
+
+        return currentUser.getFriendsList().contains(friendToAdd);
+    }
+    //TODO: NOT DRY
+    @Transactional
+    public void createUserRelation(@Valid AddRelationDto addRelationDto) {
+        Optional<AppUser> optCurrentUser = userRepository.findById(addRelationDto.getCurrentUserId());
+        Optional<AppUser> optFriendToAdd = userRepository.findByEmail(addRelationDto.getEmail());
+
+        AppUser currentUser = null;
+        AppUser friendToAdd = null;
+
+        if (optCurrentUser.isPresent()) {
+            currentUser = optCurrentUser.get();
+        } else {
+            throw new RuntimeException();
+        }
+
+        if (optFriendToAdd.isPresent()) {
+            friendToAdd = optFriendToAdd.get();
+        } else {
+            throw new RuntimeException();
+        }
+        currentUser.getFriendsList().add(friendToAdd);
+        userRepository.save(currentUser);
+
+        friendToAdd.getFriendsList().add(currentUser);
+        userRepository.save(friendToAdd);
     }
 }

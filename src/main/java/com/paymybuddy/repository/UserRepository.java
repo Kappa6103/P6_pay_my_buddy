@@ -4,9 +4,11 @@ import com.paymybuddy.model.AppUser;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends CrudRepository<AppUser, Integer> {
 
-    public AppUser findByEmail(String email);
+    public Optional<AppUser> findByEmail(String email);
 
 }
