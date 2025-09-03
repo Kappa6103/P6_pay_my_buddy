@@ -5,6 +5,7 @@ import com.paymybuddy.model.AppUser;
 import com.paymybuddy.model.Transaction;
 import com.paymybuddy.model.dto.TransactionDto;
 import com.paymybuddy.model.dto.TransactionHistoryDto;
+import com.paymybuddy.repository.AccountRepository;
 import com.paymybuddy.repository.TransactionRepository;
 import com.paymybuddy.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,29 +22,13 @@ import java.util.Optional;
 public class TransactionService {
 
     @Autowired
-    AccountService accountService;
-
-    @Autowired
     TransactionRepository transactionRepository;
 
     @Autowired
     UserRepository userRepository;
 
-    public Transaction addTransaction(Transaction transaction) {
-        return transactionRepository.save(transaction);
-    }
-
-    public Optional<Transaction> getTransaction(int id) {
-        return transactionRepository.findById(id);
-    }
-
-    public List<Transaction> getTransactionsByUser(AppUser sender) {
-        return transactionRepository.findAllBySender(sender);
-    }
-
-    public void deleteTransaction(Transaction transaction) {
-        transactionRepository.delete(transaction);
-    }
+    @Autowired
+    AccountRepository accountRepository;
 
     //TODO : how can i make it fail ?
     @Transactional
@@ -76,7 +62,7 @@ public class TransactionService {
 
         transaction.setAmount(BigDecimal.valueOf(transactionDto.getTransactionAmount()));
 
-        transaction = addTransaction(transaction);
+        transaction = transactionRepository.save(transaction);
 
         return transaction;
     }
@@ -93,11 +79,12 @@ public class TransactionService {
         senderAccount.setBalance(initialValueOfSenderAccount.subtract(transactionValue));
         receiverAccount.setBalance(initialValueOfReceiverAccount.add(transactionValue));
 
-        accountService.addAccount(senderAccount);
-        accountService.addAccount(receiverAccount);
+        accountRepository.save(senderAccount);
+        accountRepository.save(receiverAccount);
     }
 
     //TODO: FINISH THIS
     public List<TransactionHistoryDto> getTransactionHistoryDtoByUser(AppUser appUser) {
+        return Collections.emptyList();
     }
 }

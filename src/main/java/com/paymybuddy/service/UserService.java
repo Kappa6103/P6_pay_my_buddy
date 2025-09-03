@@ -5,6 +5,7 @@ import com.paymybuddy.model.AppUser;
 import com.paymybuddy.model.Transaction;
 import com.paymybuddy.model.dto.*;
 import com.paymybuddy.repository.AccountRepository;
+import com.paymybuddy.repository.TransactionRepository;
 import com.paymybuddy.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -38,6 +39,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private TransactionService transactionService;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     public RegisterDto loadRegisterDto() {
         return new RegisterDto();
@@ -99,7 +103,7 @@ public class UserService implements UserDetailsService {
             }
             transactionDto.setRelationList(appUserNameAndIdList);
         }
-        List<Transaction> transactionList = transactionService.getTransactionsByUser(appUser);
+        List<Transaction> transactionList = transactionRepository.findAllBySender(appUser);
 
         List<TransactionHistoryDto> transactionHistoryDtoList = new ArrayList<>(transactionList.size());
       for (Transaction transaction : transactionList) {

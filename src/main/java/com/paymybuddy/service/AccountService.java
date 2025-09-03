@@ -8,22 +8,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+//TODO: IS THIS CLASS USED ?
 @Service
 public class AccountService {
 
-    @Autowired
-    AccountRepository accountRepository;
-
-    public Account addAccount(Account account) {
-        return accountRepository.save(account);
-    }
-
-    public Optional<Account> getAccountByUser(AppUser user) {
-        return accountRepository.findByUser(user);
-    }
-
-    public void deleteAccount(Account account) {
-        accountRepository.delete(account);
-    }
+//    @Autowired
+//    AccountRepository accountRepository;
+//
+//    public Account addAccount(Account account) {
+//        return accountRepository.save(account);
+//    }
+//
+//    public Optional<Account> getAccountByUser(AppUser user) {
+//        return accountRepository.findByUser(user);
+//    }
+//
+//    public void deleteAccount(Account account) {
+//        accountRepository.delete(account);
+//    }
 
 }
