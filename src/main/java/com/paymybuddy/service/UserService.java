@@ -1,13 +1,15 @@
 package com.paymybuddy.service;
 
+import com.paymybuddy.model.Account;
 import com.paymybuddy.model.AppUser;
 import com.paymybuddy.model.Transaction;
 import com.paymybuddy.model.dto.AppUserNameAndId;
+import com.paymybuddy.model.dto.RegisterDto;
 import com.paymybuddy.model.dto.TransactionDto;
 import com.paymybuddy.model.dto.TransactionHistoryDto;
 import com.paymybuddy.repository.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -106,5 +109,32 @@ public class UserService implements UserDetailsService {
       transactionDto.setTransactionHistory(transactionHistoryDtoList);
 
         return transactionDto;
+    }
+
+    public boolean verifyPresenceOfEmailInDDB(String email) {
+        AppUser appUser= userRepository.findByEmail(email);
+        if (appUser == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void createNewUser(@Valid RegisterDto registerDto) {
+        AppUser newUser = new AppUser();
+        newUser.setUserName(registerDto.getUserName());
+        newUser.setEmail(registerDto.getEmail());
+        newUser.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+
+        newUser = userService.addUser(newUser);
+
+        Account newAccount = new Account();
+
+        newAccount.setUser(newUser);
+
+        userService.addUser(newUser);
+        newAccount.setBalance(BigDecimal.valueOf(100.0));
+
+        accountService.addAccount(newAccount);
     }
 }

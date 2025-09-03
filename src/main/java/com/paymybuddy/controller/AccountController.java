@@ -18,19 +18,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 @Controller
 public class AccountController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/inscription")
     public String register(Model model) {
@@ -40,53 +33,34 @@ public class AccountController {
         return "inscription";
     }
 
-    //TODO Pas de confirmation de mdp et a mettre dans une @Transactional service method
     @PostMapping("/inscription")
-    @Transactional //jarkarta or spring framework ?
+    @Transactional
     public String register(
             Model model,
             @Valid @ModelAttribute RegisterDto registerDto,
             BindingResult result
     ) {
-        AppUser appUser = userService.getUserByEmail(registerDto.getEmail());
+        //Check if the email is already taken :
+        boolean isEmailAlreadyInDDB = userService.verifyPresenceOfEmailInDDB(registerDto.getEmail());
 
-        if (appUser != null) {
+        if (isEmailAlreadyInDDB) {
             result.addError(
                     new FieldError("registerDto", "email",
                             "Email address is already used")
             );
         }
 
+        //If email is already taken, returns before creating new user
         if (result.hasErrors()) {
             return "inscription";
         }
 
-        try {
-            //Create a new account
-            AppUser newUser = new AppUser();
-            newUser.setUserName(registerDto.getUserName());
-            newUser.setEmail(registerDto.getEmail());
-            newUser.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        //Create a new account
+        userService.createNewUser(registerDto);
+        //Return clear the register Dto for and tell the webpage it's a success.
+        model.addAttribute("registerDto", new RegisterDto());
+        model.addAttribute("success", true);
 
-            newUser = userService.addUser(newUser);
-
-            Account newAccount = new Account();
-
-            newAccount.setUser(newUser);
-
-            userService.addUser(newUser);
-            newAccount.setBalance(BigDecimal.valueOf(0.0));
-
-            accountService.addAccount(newAccount);
-
-            model.addAttribute("registerDto", new RegisterDto());
-            model.addAttribute("success", true);
-
-        } catch (Exception e) {
-            result.addError(
-                    new FieldError("registerDto", "userName", e.getMessage())
-            );
-        }
         return "inscription";
     }
 
