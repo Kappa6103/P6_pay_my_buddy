@@ -60,9 +60,4 @@ public class SpringSecurityConfig {
         return auth;
     }
 
-    @Bean
-    public Scanner scanner() {
-        return new Scanner(System.in);
-    }
-
 }
