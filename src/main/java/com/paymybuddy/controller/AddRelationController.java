@@ -26,7 +26,7 @@ public class AddRelationController {
 
     @GetMapping("/ajouter_relation")
     public String addRelation(Model model) {
-        AddRelationDto addRelationDto = new AddRelationDto();
+        AddRelationDto addRelationDto = userService.loadAddRelationDto();
         model.addAttribute(addRelationDto);
         return "ajouter_relation";
     }

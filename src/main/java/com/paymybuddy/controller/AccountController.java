@@ -1,14 +1,9 @@
 package com.paymybuddy.controller;
 
-import com.paymybuddy.model.Account;
-import com.paymybuddy.model.AppUser;
 import com.paymybuddy.model.dto.RegisterDto;
-import com.paymybuddy.service.AccountService;
 import com.paymybuddy.service.UserService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.math.BigDecimal;
 
 @Controller
 public class AccountController {
@@ -27,14 +21,13 @@ public class AccountController {
 
     @GetMapping("/inscription")
     public String register(Model model) {
-        RegisterDto registerDto = new RegisterDto();
+        RegisterDto registerDto = userService.loadRegisterDto();
         model.addAttribute(registerDto);
         model.addAttribute("success", false);
         return "inscription";
     }
 
     @PostMapping("/inscription")
-    @Transactional
     public String register(
             Model model,
             @Valid @ModelAttribute RegisterDto registerDto,
@@ -63,6 +56,4 @@ public class AccountController {
 
         return "inscription";
     }
-
-
 }

@@ -3,11 +3,10 @@ package com.paymybuddy.service;
 import com.paymybuddy.model.Account;
 import com.paymybuddy.model.AppUser;
 import com.paymybuddy.model.Transaction;
-import com.paymybuddy.model.dto.AppUserNameAndId;
-import com.paymybuddy.model.dto.RegisterDto;
-import com.paymybuddy.model.dto.TransactionDto;
-import com.paymybuddy.model.dto.TransactionHistoryDto;
+import com.paymybuddy.model.dto.*;
+import com.paymybuddy.repository.AccountRepository;
 import com.paymybuddy.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -28,10 +28,20 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    AccountRepository accountRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private TransactionService transactionService;
+
+    public RegisterDto loadRegisterDto() {
+        return new RegisterDto();
+    }
 
     public AppUser addUser(AppUser user) {
         return userRepository.save(user);
@@ -120,21 +130,28 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    //TODO : refactor this method, too ugly to stay
+    @Transactional
     public void createNewUser(@Valid RegisterDto registerDto) {
         AppUser newUser = new AppUser();
         newUser.setUserName(registerDto.getUserName());
         newUser.setEmail(registerDto.getEmail());
         newUser.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
-        newUser = userService.addUser(newUser);
+        newUser = userRepository.save(newUser);
 
         Account newAccount = new Account();
 
         newAccount.setUser(newUser);
 
-        userService.addUser(newUser);
+        userRepository.save(newUser);
+
         newAccount.setBalance(BigDecimal.valueOf(100.0));
 
-        accountService.addAccount(newAccount);
+        accountRepository.save(newAccount);
+    }
+
+    public AddRelationDto loadAddRelationDto() {
+        return new AddRelationDto();
     }
 }
