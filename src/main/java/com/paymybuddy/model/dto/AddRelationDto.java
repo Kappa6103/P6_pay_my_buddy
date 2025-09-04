@@ -10,12 +10,20 @@ public class AddRelationDto {
     @NotEmpty
     private String email;
 
-    private final int currentUserId;
+    private int currentUserId;
 
-    private final String currentUserEmail;
+    private String currentUserEmail;
 
     public  AddRelationDto(int currentUserId, String currentUserEmail) {
         this.currentUserId = currentUserId;
+        this.currentUserEmail = currentUserEmail;
+    }
+
+    public void setCurrentUserId(int currentUserId) {
+        this.currentUserId = currentUserId;
+    }
+
+    public void setCurrentUserEmail(String currentUserEmail) {
         this.currentUserEmail = currentUserEmail;
     }
 

@@ -19,17 +19,25 @@
             </form>
         </div>
     </nav>
+
     <hr />
+
+    <div th:if="${success}" role="alert">
+        <strong>Relationship Created Successfully!</strong>
+    </div>
+
     <div>Chercher une relation</div>
     <form method="post" th:action="@{/ajouter_relation}" th:object="${addRelationDto}">
+        <input type="hidden" th:field="*{currentUserId}"/>
+        <input type="hidden" th:field="*{currentUserEmail}">
         <div>
-            <input th:field="${addRelationDto.email}">
+            <input th:field="*{email}">
             <p th:if="${#fields.hasErrors('email')}"
                th:errorclass="text-danger"
-               th:errors="${addRelationDto.email}"></p>
+               th:errors="*{email}"></p>
         </div>
         <div>
-            <button>Ajouter</button>
+            <button type="submit">Ajouter</button>
         </div>
     </form>
 

@@ -20,11 +20,11 @@ public class AddRelationController {
     @Autowired
     UserService userService;
 
-    //TODO: should add an attribute for succes/failure of the form
+    //TODO: should add an attribute for success/failure of the form
     @GetMapping("/ajouter_relation")
     public String addRelation(Model model) {
-        AddRelationDto addRelationDto = userService.loadAddRelationDto();
-        model.addAttribute(addRelationDto);
+        model.addAttribute("addRelationDto", userService.loadAddRelationDto());
+        model.addAttribute("success", false);
         return "ajouter_relation";
     }
 
@@ -74,7 +74,7 @@ public class AddRelationController {
         //TODO: inject new dto
         userService.createUserRelation(addRelationDto);
         model.addAttribute("success", true);
-
+        model.addAttribute("addRelationDto", userService.loadAddRelationDto());
         return "ajouter_relation";
     }
 
