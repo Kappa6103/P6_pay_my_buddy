@@ -38,42 +38,26 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    private TransactionService transactionService;
-
-    @Autowired
     private TransactionRepository transactionRepository;
 
     public RegisterDto loadRegisterDto() {
         return new RegisterDto();
     }
 
-    public AppUser saveUser(AppUser user) {
-        return userRepository.save(user);
-    }
-
-    public Optional<AppUser> getUserById(int id) {
-        return userRepository.findById(id);
-    }
-
-    public void deleteUser(AppUser user) {
-        userRepository.delete(user);
-    }
-
-    public void deleteUserById(int userId) {
-        userRepository.deleteById(userId);
-    }
-
-    public AppUser getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        AppUser user = getUserByEmail(email);
+        Optional<AppUser> optAppUser = userRepository.findByEmail(email);
+
+        AppUser user = null;
+
+        if (optAppUser.isPresent()) {
+            user = optAppUser.get();
+        }
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
+
         return User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())
@@ -83,7 +67,19 @@ public class UserService implements UserDetailsService {
 
     public AppUser getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return getUserByEmail(authentication.getName());
+        Optional<AppUser> optAppUser = userRepository.findByEmail(authentication.getName());
+
+        AppUser appUser = null;
+
+        if (optAppUser.isPresent()) {
+            appUser = optAppUser.get();
+        }
+
+        if (appUser != null) {
+            return appUser;
+        } else {
+            throw new RuntimeException();
+        }
     }
 
 
@@ -92,7 +88,6 @@ public class UserService implements UserDetailsService {
         AppUser appUser = getCurrentUser();
         transactionDto.setSenderId(appUser.getUserId());
 
-        //TODO : IS IT OK, ASK YANNICK, have to deal with null value for field receiverId when friendList is empty
         if (appUser.getFriendsList().isEmpty()) {
             transactionDto.setRelationList(Collections.emptyList());
         } else {
@@ -121,7 +116,13 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean verifyPresenceOfEmailInDDB(String email) {
-        AppUser appUser = userRepository.findByEmail(email);
+        Optional<AppUser> optAppUser = userRepository.findByEmail(email);
+        AppUser appUser = null;
+
+        if (optAppUser.isPresent()) {
+            appUser = optAppUser.get();
+        }
+
         if (appUser == null) {
             return false;
         } else {
@@ -130,7 +131,13 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean verifyPresenceOfUserToAdd(String email) {
-        AppUser appUser = userRepository.findByEmail(email);
+        Optional<AppUser> optAppUser = userRepository.findByEmail(email);
+        AppUser appUser = null;
+
+        if (optAppUser.isPresent()) {
+            appUser = optAppUser.get();
+        }
+
         if (appUser == null) {
             return false;
         } else {
@@ -138,7 +145,6 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    //TODO : refactor this method, too ugly to stay
     @Transactional
     public void createNewUser(@Valid RegisterDto registerDto) {
         AppUser newUser = new AppUser();
@@ -164,7 +170,6 @@ public class UserService implements UserDetailsService {
         return new AddRelationDto(appUser.getUserId(), appUser.getEmail());
     }
 
-    //TODO : ASK YANNICK comment gere les nulls, isEmpty() here
     public boolean verifyPresenceOfFriendToAddInUserFriendList(int currentUserId, String email) {
         Optional<AppUser> optCurrentUser = userRepository.findById(currentUserId);
         Optional<AppUser> optFriendToAdd = userRepository.findByEmail(email);
@@ -186,7 +191,7 @@ public class UserService implements UserDetailsService {
 
         return currentUser.getFriendsList().contains(friendToAdd);
     }
-    //TODO: NOT DRY
+
     @Transactional
     public void createUserRelation(@Valid AddRelationDto addRelationDto) {
         Optional<AppUser> optCurrentUser = userRepository.findById(addRelationDto.getCurrentUserId());
@@ -217,6 +222,7 @@ public class UserService implements UserDetailsService {
         return new ModifyProfileDto(getCurrentUser().getUserId());
     }
 
+    @Transactional
     public void modifyUserProfile(@Valid ModifyProfileDto modifyProfileDto) {
         Optional<AppUser> optCurrentUser = userRepository.findById(modifyProfileDto.getCurrentUserId());
 
