@@ -27,6 +27,7 @@ public class TransferController {
     public String transfer(Model model) {
         TransactionDto transactionDto = userService.loadTransactionDto();
         model.addAttribute("transactionDto", transactionDto);
+        model.addAttribute("success", false);
 
         return "/transfert";
     }
@@ -36,7 +37,7 @@ public class TransferController {
             Model model,
             @Valid @ModelAttribute TransactionDto transactionDto,
             BindingResult result
-    ) { //TODO: ASK YANNICK : GOOD THINKING, OF SHOULD I RETURN VOID
+    ) {
         Transaction transaction = transactionService.createTransaction(transactionDto);
         transactionService.processTransaction(transaction);
 

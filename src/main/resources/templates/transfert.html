@@ -18,11 +18,17 @@
                 <button>Se deconnecter</button>
             </form>
         </div>
+    </nav>
 
         <div align="center">
             <div style="border-style:solid; width:500px">
                 <h1>Transaction Form</h1>
+                <div th:if="${success}" role="alert">
+                    <strong>Money Sent !</strong>
+                </div>
                 <form role="form" method="post" th:action="@{/transfert}" th:object="${transactionDto}">
+                    <input type="hidden" th:field="*{senderId}"/>
+
                     <label>Friends List:</label>
                     <select th:field="*{receiverId}">
                         <option th:each="relation : *{relationList}" th:value="${relation.userId()}" th:text="${relation.userName()}">User Connection</option>
@@ -57,7 +63,7 @@
 
         </div>
 
-    </nav>
+
 
 </body>
 
