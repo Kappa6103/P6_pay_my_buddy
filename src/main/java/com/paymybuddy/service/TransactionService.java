@@ -30,7 +30,6 @@ public class TransactionService {
     @Autowired
     AccountRepository accountRepository;
 
-    //TODO : how can i make it fail ?
     @Transactional
     public Transaction createTransaction(@Valid TransactionDto transactionDto) {
         Transaction transaction = new Transaction();
@@ -60,7 +59,12 @@ public class TransactionService {
             transaction.setDescription(transactionDto.getDescription());
         }
 
-        transaction.setAmount(BigDecimal.valueOf(transactionDto.getTransactionAmount()));
+
+        if (transactionDto.getTransactionAmount() <= 0) {
+            throw new RuntimeException();
+        } else {
+            transaction.setAmount(BigDecimal.valueOf(transactionDto.getTransactionAmount()));
+        }
 
         transaction = transactionRepository.save(transaction);
 
@@ -84,8 +88,4 @@ public class TransactionService {
 
     }
 
-    //TODO: FINISH THIS
-    public List<TransactionHistoryDto> getTransactionHistoryDtoByUser(AppUser appUser) {
-        return Collections.emptyList();
-    }
 }

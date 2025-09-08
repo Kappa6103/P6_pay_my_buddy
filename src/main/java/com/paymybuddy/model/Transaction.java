@@ -1,6 +1,9 @@
 package com.paymybuddy.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 
@@ -23,6 +26,7 @@ public class Transaction {
 
     private String description;
 
+    @DecimalMin(value = "1", message = "Transaction amount should be one or above")
     private BigDecimal amount;
 
 
