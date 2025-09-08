@@ -24,6 +24,7 @@
     <main>
         <div>
             <form method="post" th:object="${modifyProfileDto}" th:action="@{/profil}">
+                <input type="hidden" th:field="*{currentUserId}"/>
                 <label>Username</label>
                 <div>
                     <input th:field="${modifyProfileDto.userName}">
