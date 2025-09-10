@@ -236,9 +236,4 @@ class TransactionServiceTest {
         assertEquals(new BigDecimal("600"), receiverAccount.getBalance());
     }
 
-
-
-    @Test
-    void getTransactionHistoryDtoByUser() {
-    }
 }

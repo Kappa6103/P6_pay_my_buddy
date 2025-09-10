@@ -4,7 +4,6 @@ import com.paymybuddy.model.Account;
 import com.paymybuddy.model.AppUser;
 import com.paymybuddy.model.Transaction;
 import com.paymybuddy.model.dto.TransactionDto;
-import com.paymybuddy.model.dto.TransactionHistoryDto;
 import com.paymybuddy.repository.AccountRepository;
 import com.paymybuddy.repository.TransactionRepository;
 import com.paymybuddy.repository.UserRepository;
@@ -14,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 @Service

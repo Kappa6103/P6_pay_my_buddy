@@ -29,6 +29,7 @@ public class ProfileController {
         return "profil";
     }
 
+    //TODO : CHECK BLANK VALUE HERE, NOT IN SERVICE
     @PostMapping("/profil")
     public String changeProfileInfo(
             Model model,

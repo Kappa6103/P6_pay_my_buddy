@@ -52,9 +52,7 @@ public class UserService implements UserDetailsService {
 
         if (optAppUser.isPresent()) {
             user = optAppUser.get();
-        }
-
-        if (user == null) {
+        } else {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
 
@@ -73,9 +71,6 @@ public class UserService implements UserDetailsService {
 
         if (optAppUser.isPresent()) {
             appUser = optAppUser.get();
-        }
-
-        if (appUser != null) {
             return appUser;
         } else {
             throw new RuntimeException();
@@ -100,19 +95,31 @@ public class UserService implements UserDetailsService {
         }
         List<Transaction> transactionList = transactionRepository.findAllBySender(appUser);
 
-        List<TransactionHistoryDto> transactionHistoryDtoList = new ArrayList<>(transactionList.size());
-      for (Transaction transaction : transactionList) {
-          transactionHistoryDtoList.add(new TransactionHistoryDto(
-                  transaction.getReceiver().getUserName(),
-                  transaction.getDescription(),
-                  transaction.getAmount().intValue()
-                  )
-          );
-      }
+        List<TransactionHistoryDto> transactionHistoryDtoList = getTransactionHistoryDtos(transactionList);
 
-      transactionDto.setTransactionHistory(transactionHistoryDtoList);
+        transactionDto.setTransactionHistory(transactionHistoryDtoList);
 
         return transactionDto;
+    }
+
+    private List<TransactionHistoryDto> getTransactionHistoryDtos(List<Transaction> transactionList) {
+        List<TransactionHistoryDto> transactionHistoryDtoList;
+
+        if (transactionList.isEmpty()) {
+            transactionHistoryDtoList = Collections.emptyList();
+        } else {
+            transactionHistoryDtoList = new ArrayList<>();
+
+            for (Transaction transaction : transactionList) {
+                transactionHistoryDtoList.add(new TransactionHistoryDto(
+                                transaction.getReceiver().getUserName(),
+                                transaction.getDescription(),
+                                transaction.getAmount().intValue()
+                        )
+                );
+            }
+        }
+        return transactionHistoryDtoList;
     }
 
     public boolean verifyPresenceOfEmailInDDB(String email) {
@@ -130,23 +137,25 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public boolean verifyPresenceOfUserToAdd(String email) {
-        Optional<AppUser> optAppUser = userRepository.findByEmail(email);
-        AppUser appUser = null;
+    //TODO: REMOVE METHOD BELOW
 
-        if (optAppUser.isPresent()) {
-            appUser = optAppUser.get();
-        }
-
-        if (appUser == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+//    public boolean verifyPresenceOfUserToAdd(String email) {
+//        Optional<AppUser> optAppUser = userRepository.findByEmail(email);
+//        AppUser appUser = null;
+//
+//        if (optAppUser.isPresent()) {
+//            appUser = optAppUser.get();
+//        }
+//
+//        if (appUser == null) {
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
 
     @Transactional
-    public void createNewUser(@Valid RegisterDto registerDto) {
+    public void createNewUser(RegisterDto registerDto) {
         AppUser newUser = new AppUser();
         newUser.setUserName(registerDto.getUserName());
         newUser.setEmail(registerDto.getEmail());
@@ -193,7 +202,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void createUserRelation(@Valid AddRelationDto addRelationDto) {
+    public void createUserRelation(AddRelationDto addRelationDto) {
         Optional<AppUser> optCurrentUser = userRepository.findById(addRelationDto.getCurrentUserId());
         Optional<AppUser> optFriendToAdd = userRepository.findByEmail(addRelationDto.getEmail());
 
@@ -223,7 +232,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void modifyUserProfile(@Valid ModifyProfileDto modifyProfileDto) {
+    public void modifyUserProfile(ModifyProfileDto modifyProfileDto) {
         Optional<AppUser> optCurrentUser = userRepository.findById(modifyProfileDto.getCurrentUserId());
 
         AppUser currentUser = null;
@@ -234,24 +243,20 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException();
         }
 
-        if (modifyProfileDto.getUserName() != null
-                && !modifyProfileDto.getUserName().isBlank()) {
+        if (modifyProfileDto.getUserName() != null) {
             currentUser.setUserName(modifyProfileDto.getUserName());
 
         }
 
-        if (modifyProfileDto.getEmail() != null
-                && !modifyProfileDto.getEmail().isBlank()) {
+        if (modifyProfileDto.getEmail() != null) {
             currentUser.setEmail(modifyProfileDto.getEmail());
 
         }
 
-        if (modifyProfileDto.getPassword() != null
-                && !modifyProfileDto.getPassword().isBlank()) {
+        if (modifyProfileDto.getPassword() != null) {
             currentUser.setPassword(passwordEncoder.encode(modifyProfileDto.getPassword()));
         }
 
         userRepository.save(currentUser);
-
     }
 }
