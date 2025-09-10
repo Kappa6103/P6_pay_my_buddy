@@ -1,7 +1,6 @@
 package com.paymybuddy.model.dto;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
 
 public class ModifyProfileDto {
 
@@ -12,7 +11,6 @@ public class ModifyProfileDto {
     @Email
     private String email;
 
-    @Size(min = 6, message = "Minimum Password length is 6 characters")
     private String password;
 
     public ModifyProfileDto(int currentUserId) {

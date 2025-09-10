@@ -53,9 +53,15 @@
                 <div>
                     <button type="submit">Modifier</button>
                 </div>
-
+                <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">Error message</p>
+                </div>
             </form>
 
+        </div>
+
+        <div th:if="${success}" role="alert">
+            <strong>Updated</strong>
         </div>
     </main>
 </body>
