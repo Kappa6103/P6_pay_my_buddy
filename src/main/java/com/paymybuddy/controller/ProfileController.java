@@ -22,33 +22,33 @@ public class ProfileController {
     @GetMapping("/profil")
     public String profile(Model model) {
         ModifyProfileDto modifyProfileDto = userService.loadModifyProfileDto();
-        model.addAttribute(modifyProfileDto);
+        model.addAttribute("modifyProfileDto", modifyProfileDto);
         model.addAttribute("success", false);
         return "profil";
     }
 
-    //TODO : CHECK BLANK VALUE HERE, NOT IN SERVICE
     @PostMapping("/profil")
     public String changeProfileInfo(
             Model model,
             @Valid @ModelAttribute ModifyProfileDto modifyProfileDto,
             BindingResult result
     ) {
-        //TODO : the probleme is here, have to set the fields value to null where appropriate
         boolean hasAFieldBeenModified = false;
 
-        if (modifyProfileDto.getUserName() != null && !modifyProfileDto.getUserName().isBlank()) {
+        modifyProfileDto = inputFieldsNullSetter(modifyProfileDto);
+
+        if (modifyProfileDto.getUserName() != null) {
             hasAFieldBeenModified = true;
         }
 
-        if (modifyProfileDto.getEmail() != null && !modifyProfileDto.getEmail().isBlank()) {
+        if (modifyProfileDto.getEmail() != null) {
             hasAFieldBeenModified = true;
         }
 
-        if (modifyProfileDto.getPassword() != null && !modifyProfileDto.getPassword().isBlank()) {
+        if (modifyProfileDto.getPassword() != null) {
             if (modifyProfileDto.getPassword().length() < 6 ) {
                 result.addError(
-                        new FieldError("modifyProfileDto", "email",
+                        new FieldError("modifyProfileDto", "password",
                                 "Minimum Password length is 6 characters")
                 );
             }
@@ -67,10 +67,26 @@ public class ProfileController {
                     new ObjectError("modifyProfileDto",
                             "No value entered")
             );
+            model.addAttribute("success", false);
         }
 
-        //model.addAttribute("modifyProfileDto", userService.loadModifyProfileDto());
-
         return "profil";
+    }
+
+    private ModifyProfileDto inputFieldsNullSetter(ModifyProfileDto modifyProfileDto) {
+        final String userNameField = modifyProfileDto.getUserName().trim();
+        final String emailField = modifyProfileDto.getEmail().trim();
+        final String passwordField = modifyProfileDto.getPassword().trim();
+
+        if (userNameField.isBlank()) {
+            modifyProfileDto.setUserName(null);
+        }
+        if (emailField.isBlank()) {
+            modifyProfileDto.setEmail(null);
+        }
+        if (passwordField.isBlank()) {
+            modifyProfileDto.setPassword(null);
+        }
+        return modifyProfileDto;
     }
 }
