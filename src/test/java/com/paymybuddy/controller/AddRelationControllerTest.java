@@ -56,7 +56,7 @@ class AddRelationControllerTest {
         //Arrange
         when(userService.verifyPresenceOfEmailInDDB(FRIEND_EMAIL)).thenReturn(true);
         when(userService.verifyPresenceOfFriendToAddInUserFriendList(
-                APPUSER_ID, APPUSER_EMAIL)).thenReturn(false);
+                APPUSER_ID, FRIEND_EMAIL)).thenReturn(false);
         ArgumentCaptor<AddRelationDto> addRelationDtoArgumentCaptor =
                 ArgumentCaptor.forClass(AddRelationDto.class);
 

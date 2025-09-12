@@ -30,7 +30,7 @@ public class TransferController {
         model.addAttribute("transactionDto", transactionDto);
         model.addAttribute("success", false);
 
-        return "/transfert";
+        return "transfert";
     }
 
     @PostMapping("/transfert")
@@ -50,11 +50,10 @@ public class TransferController {
         if (result.hasErrors()) {
             return "transfer";
         }
-        //TODO : CHECK IF AMOUNT IS NEGATIVE
+
         Transaction transaction = transactionService.createTransaction(transactionDto);
         transactionService.processTransaction(transaction);
 
-        model.addAttribute("transactionDto", userService.loadTransactionDto());
         model.addAttribute("success", true);
         return "transfert";
     }

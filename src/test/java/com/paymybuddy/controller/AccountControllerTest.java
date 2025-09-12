@@ -48,7 +48,7 @@ class AccountControllerTest {
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("inscription"))
-                .andExpect(model(). attributeExists("registerDto"))
+                .andExpect(model().attributeExists("registerDto"))
                 .andExpect(model().attribute("success", false)
         );
     }
