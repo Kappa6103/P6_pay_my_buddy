@@ -20,7 +20,6 @@ public class AddRelationController {
     @Autowired
     UserService userService;
 
-    //TODO: should add an attribute for success/failure of the form
     @GetMapping("/ajouter_relation")
     public String addRelation(Model model) {
         model.addAttribute("addRelationDto", userService.loadAddRelationDto());
@@ -42,7 +41,6 @@ public class AddRelationController {
                     new FieldError("addRelationDto", "email",
                             "L'utilisateur n'existe pas")
             );
-            return "ajouter_relation";
         }
 
         if (Objects.equals(addRelationDto.getCurrentUserEmail(), addRelationDto.getEmail())) {
@@ -52,7 +50,6 @@ public class AddRelationController {
                             "Vous ne pouvez pas vous ajouter vous-meme"
                     )
             );
-            return "ajouter_relation";
         }
 
         boolean isFriendToAddAlreadyInFriendList = userService.verifyPresenceOfFriendToAddInUserFriendList(
@@ -64,17 +61,15 @@ public class AddRelationController {
                     new FieldError("addRelationDto", "email",
                             "Cette personne est deja dans votre liste d'amis")
             );
-            return "ajouter_relation";
         }
 
         if (result.hasErrors()) {
+            model.addAttribute("success", false);
             return "ajouter_relation";
         }
 
-        //TODO: inject new dto
         userService.createUserRelation(addRelationDto);
         model.addAttribute("success", true);
-        model.addAttribute("addRelationDto", userService.loadAddRelationDto());
         return "ajouter_relation";
     }
 

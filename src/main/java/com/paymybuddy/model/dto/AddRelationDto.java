@@ -1,6 +1,5 @@
 package com.paymybuddy.model.dto;
 
-import com.paymybuddy.model.AppUser;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 

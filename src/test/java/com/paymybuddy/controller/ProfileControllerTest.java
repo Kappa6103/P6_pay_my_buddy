@@ -94,7 +94,6 @@ class ProfileControllerTest {
         verify(userService,never()).modifyUserProfile(any(ModifyProfileDto.class));
     }
 
-
     @Test
     void changeProfileInfo_withShortPassword_shouldReturnError() throws Exception {
         mockMvc.perform(post("/profil")
@@ -109,7 +108,6 @@ class ProfileControllerTest {
                 .andExpect(model().attributeHasFieldErrors("modifyProfileDto", "password"));
         verify(userService,never()).modifyUserProfile(any(ModifyProfileDto.class));
     }
-
 
     @Test
     void changeProfileInfo_withAllFieldsValid_shouldUpdateProfile() throws Exception {
@@ -136,9 +134,6 @@ class ProfileControllerTest {
         assertEquals(USERNAME_FIELD, capturedModifyProfileDto.getUserName());
         assertEquals(EMAIL_FIELD, capturedModifyProfileDto.getEmail());
         assertEquals(PASSWORD_FIELD, capturedModifyProfileDto.getPassword());
-
     }
-
-
 
 }
