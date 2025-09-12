@@ -27,27 +27,27 @@
                 <input type="hidden" th:field="*{currentUserId}"/>
                 <label>Username</label>
                 <div>
-                    <input th:field="${modifyProfileDto.userName}">
+                    <input th:field="*{userName}">
                     <p th:if="${#fields.hasErrors('userName')}"
                        th:errorclass="text-danger"
-                       th:errors="${modifyProfileDto.userName}"></p>
+                       th:errors="*{userName}"></p>
                 </div>
 
                 <label>Mail</label>
                 <div>
-                    <input th:field="${modifyProfileDto.email}">
+                    <input th:field="*{email}">
                     <p th:if="${#fields.hasErrors('email')}"
                        th:errorclass="text-danger"
-                       th:errors="${modifyProfileDto.email}"></p>
+                       th:errors="*{email}"></p>
                 </div>
 
                 <label>Password</label>
                 <div>
                     <input class="form-control" type="password"
-                           th:field="${modifyProfileDto.password}">
+                           th:field="*{password}">
                     <p th:if="${#fields.hasErrors('password')}"
                        th:errorclass="text-danger"
-                       th:errors="${modifyProfileDto.password}"></p>
+                       th:errors="*{password}"></p>
                 </div>
 
                 <div>

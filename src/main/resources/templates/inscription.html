@@ -20,33 +20,33 @@
                 aria-label="close"></button>
     </div>
 
-    <form method="post" th:object="${registerDto}">
+    <form method="post" th:object="${registerDto}" th:action="@{/inscription}">
         <input type="hidden" th:name="${_csrf.parameterName}"
                th:value="${_csrf.token}" />
 
         <label>Username*</label>
         <div>
-            <input th:field="${registerDto.userName}">
+            <input th:field="*{userName}">
             <p th:if="${#fields.hasErrors('userName')}"
                th:errorclass="text-danger"
-               th:errors="${registerDto.userName}"></p>
+               th:errors="*{userName}"></p>
         </div>
 
         <label>Mail*</label>
         <div>
-            <input th:field="${registerDto.email}">
+            <input th:field="*{email}">
             <p th:if="${#fields.hasErrors('email')}"
                th:errorclass="text-danger"
-               th:errors="${registerDto.email}"></p>
+               th:errors="*{email}"></p>
         </div>
 
         <label>Password*</label>
         <div>
             <input class="form-control" type="password"
-                   th:field="${registerDto.password}">
+                   th:field="*{password}">
             <p th:if="${#fields.hasErrors('password')}"
                th:errorclass="text-danger"
-               th:errors="${registerDto.password}"></p>
+               th:errors="*{password}"></p>
         </div>
 
         <div>

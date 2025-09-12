@@ -61,6 +61,7 @@ public class ProfileController {
 
         if (hasAFieldBeenModified) {
             userService.modifyUserProfile(modifyProfileDto);
+            //model.addAttribute("modifyProfileDto", userService.loadModifyProfileDto());
             model.addAttribute("success", true);
         } else {
             result.addError(
