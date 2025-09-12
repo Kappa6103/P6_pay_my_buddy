@@ -1,22 +1,25 @@
 package com.paymybuddy.controller;
 
+import com.paymybuddy.configuration.SpringSecurityConfig;
 import com.paymybuddy.model.dto.RegisterDto;
 import org.junit.jupiter.api.Test;
 import com.paymybuddy.service.UserService;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 
 @WebMvcTest(controllers = AccountController.class)
+@Import(SpringSecurityConfig.class)
 class AccountControllerTest {
 
     @Autowired
@@ -25,7 +28,8 @@ class AccountControllerTest {
     @MockitoBean
     UserService userService;
 
-    private final String USER_EMAIL = "emailfor@auth.com";
+    @MockitoBean
+    PasswordEncoder passwordEncoder;
 
     private final String USERNAME_FIELD = "USERNAME FIELD";
     private final String EMAIL_FIELD = "test@example.com";
@@ -40,7 +44,7 @@ class AccountControllerTest {
 
         //Act & Assert
         mockMvc.perform(get("/inscription")
-                .with(user(USER_EMAIL))
+                .with(anonymous())
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("inscription"))
@@ -58,7 +62,7 @@ class AccountControllerTest {
 
         //Act & Assert
         mockMvc.perform(post("/inscription")
-                .with(user(USER_EMAIL))
+                .with(anonymous())
                 .with(csrf())
                 .param("userName", USERNAME_FIELD)
                 .param("email", EMAIL_FIELD)
@@ -83,7 +87,7 @@ class AccountControllerTest {
 
         //Act & Assert
         mockMvc.perform(post("/inscription")
-                        .with(user(USER_EMAIL))
+                        .with(anonymous())
                         .with(csrf())
                         .param("userName", USERNAME_FIELD)
                         .param("email", EMAIL_FIELD)
@@ -103,7 +107,7 @@ class AccountControllerTest {
 
         //Act & Assert
         mockMvc.perform(post("/inscription")
-                        .with(user(USER_EMAIL))
+                        .with(anonymous())
                         .with(csrf())
                         .param("userName", EMPTY_FIELD)
                         .param("email", EMPTY_FIELD)
