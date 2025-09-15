@@ -28,7 +28,7 @@ public class TransactionService {
     AccountRepository accountRepository;
 
     @Transactional
-    public Transaction createTransaction(@Valid TransactionDto transactionDto) {
+    public Transaction createTransaction(TransactionDto transactionDto) {
         Transaction transaction = new Transaction();
 
         Optional<AppUser> optSender = userRepository.findById(transactionDto.getSenderId());

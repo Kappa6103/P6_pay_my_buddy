@@ -1,5 +1,6 @@
 package com.paymybuddy.model.dto;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -11,14 +12,14 @@ public class TransactionDto {
 
     private List<TransactionHistoryDto> transactionHistory;
 
+    @NotNull
     private Integer senderId;
-
+    @NotNull
     private Integer receiverId;
 
     private String description;
 
     @NotNull(message = "Transaction amount cannot be null")
-    @Positive(message = "Transaction amount must be at least one Euro")
     private Integer transactionAmount;
 
     public Integer getSenderId() {

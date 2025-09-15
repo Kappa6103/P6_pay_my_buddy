@@ -48,7 +48,8 @@ public class TransferController {
         }
 
         if (result.hasErrors()) {
-            return "transfer";
+            model.addAttribute("success", false);
+            return "transfert";
         }
 
         Transaction transaction = transactionService.createTransaction(transactionDto);
