@@ -31,6 +31,7 @@ public class SpringSecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/connexion").permitAll()
                         .requestMatchers("/inscription").permitAll()
+                        .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/ajouter_relation").authenticated()
                         .requestMatchers("/profil").authenticated()
                         .requestMatchers("/transfert").authenticated()
