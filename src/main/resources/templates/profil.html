@@ -5,23 +5,26 @@
     <meta charset="utf-8">
     <title>Page de profil</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-
 </head>
 
 <body>
-    <h1>Profile page</h1>
-    <header>
-        <nav>
-            <div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <Strong>Pay My Buddy</Strong>
+            </div>
+            <div class="nav-right">
                 <a href="transfert">Transférer</a>
-                <a href="profil">Profil</a>
+                <a href="profil" class="active">Profil</a>
                 <a href="ajouter_relation">Ajouter relation</a>
-                <form th:action="@{/logout}" method="post" style="display: inline;">
-                    <button>Se deconnecter</button>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Se déconnecter" class="logout-link">
                 </form>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+
     <main>
         <div>
             <form method="post" th:object="${modifyProfileDto}" th:action="@{/profil}">

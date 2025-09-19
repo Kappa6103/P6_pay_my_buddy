@@ -9,15 +9,20 @@
 </head>
 
 <body>
-    <h1>Transfer page</h1>
+
     <nav>
-        <div>
-            <a href="transfert">Transférer</a>
-            <a href="profil">Profil</a>
-            <a href="ajouter_relation">Ajouter relation</a>
-            <form th:action="@{/logout}" method="post" style="display: inline;">
-                <button>Se deconnecter</button>
-            </form>
+        <div class="nav-container">
+            <div class="nav-left">
+                <Strong>Pay My Buddy</Strong>
+            </div>
+            <div class="nav-right">
+                <a href="transfert" class="active">Transférer</a>
+                <a href="profil">Profil</a>
+                <a href="ajouter_relation">Ajouter relation</a>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Se déconnecter" class="logout-link">
+                </form>
+            </div>
         </div>
     </nav>
 
@@ -27,15 +32,17 @@
                 <div th:if="${success}" role="alert">
                     <strong>Money Sent !</strong>
                 </div>
-                <form role="form" method="post" th:action="@{/transfert}" th:object="${transactionDto}">
+                <form method="post" th:action="@{/transfert}" th:object="${transactionDto}">
                     <input type="hidden" th:field="*{senderId}"/>
 
                     <label>Friends List:</label>
                     <select th:field="*{receiverId}">
                         <option th:each="relation : *{relationList}" th:value="${relation.userId()}" th:text="${relation.userName()}">User Connection</option>
                     </select>
+
                     <label>Description:</label>
-                    <input th:field="*{description}">
+                    <input th:field="*{description}" placeholder="Description">
+
                     <label>Montant</label>
                     <input type="number" name="quantity" value="1" min="1" max="10000" step="1"
                            th:field="*{transactionAmount}">

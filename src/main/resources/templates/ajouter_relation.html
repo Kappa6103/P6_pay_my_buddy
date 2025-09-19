@@ -7,40 +7,53 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 
 </head>
-
+    <!-- faire un fichier html pour la nav bar / savoir expliquer pourquoi l'appli est aux normes wcag -->
 <body>
-    <h1>ajouter relation page</h1>
+
     <nav>
-        <div>
-            <a href="transfert">Transférer</a>
-            <a href="profil">Profil</a>
-            <a href="ajouter_relation">Ajouter relation</a>
-            <form th:action="@{/logout}" method="post" style="display: inline;">
-                <button>Se deconnecter</button>
-            </form>
+        <div class="nav-container">
+            <div class="nav-left">
+                <Strong>Pay My Buddy</Strong>
+            </div>
+            <div class="nav-right">
+                <a href="transfert">Transférer</a>
+                <a href="profil">Profil</a>
+                <a href="ajouter_relation" class="active">Ajouter relation</a>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Se déconnecter" class="logout-link">
+                </form>
+            </div>
         </div>
     </nav>
 
-    <hr />
-
-    <div th:if="${success}" role="alert">
-        <strong>Relationship Created Successfully!</strong>
-    </div>
-
-    <div>Chercher une relation</div>
-    <form method="post" th:action="@{/ajouter_relation}" th:object="${addRelationDto}">
-        <input type="hidden" th:field="*{currentUserId}"/>
-        <input type="hidden" th:field="*{currentUserEmail}"/>
-        <div>
-            <input th:field="*{email}">
-            <p th:if="${#fields.hasErrors('email')}"
-               th:errorclass="text-danger"
-               th:errors="*{email}"></p>
+    <main>
+        <div th:if="${success}" role="alert">
+            <strong>Relationship Created Successfully!</strong>
         </div>
-        <div>
-            <button type="submit">Ajouter</button>
+
+        <div class="display-center-line">
+            <div id="looking-for-email">
+                Chercher une relation
+            </div>
+            <form method="post" th:action="@{/ajouter_relation}" th:object="${addRelationDto}">
+                <input type="hidden" th:field="*{currentUserId}"/>
+                <input type="hidden" th:field="*{currentUserEmail}"/>
+
+                <input th:field="*{email}" required placeholder="Saisir une adresse mail" id="looking-for-email-input-field">
+                <p th:if="${#fields.hasErrors('email')}"
+                   th:errorclass="text-danger"
+                   th:errors="*{email}"></p>
+
+                <div class="box">
+                    <input type="submit" value="Ajouter" class="yellow-button"/>
+                </div>
+
+            </form>
+
         </div>
-    </form>
+
+
+    </main>
 
 
 </body>

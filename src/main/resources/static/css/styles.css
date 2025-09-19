@@ -1,52 +1,155 @@
-   /* Global styles */
-   body {
-       font-family: Arial, sans-serif;
-       margin: 0;
-       padding: 20px;
-       background-color: lightblue;
-   }
+body {
+    font-size: 1em;
+    font-family: verdana;
+    font-color: black;
+}
 
-   /* Form styles */
-   form {
-       max-width: 400px;
-       margin: 0 auto;
-       padding: 20px;
-       background-color: white;
-       border-radius: 5px;
-       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-   }
+.display-center-class {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-   input[type="text"],
-   input[type="email"],
-   input[type="password"] {
-       width: 100%;
-       padding: 8px;
-       margin: 8px 0;
-       border: 1px solid #ddd;
-       border-radius: 4px;
-       box-sizing: border-box;
-   }
+.display-center-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
 
-   input[type="submit"] {
-       background-color: #4CAF50;
-       color: white;
-       padding: 10px 15px;
-       border: none;
-       border-radius: 4px;
-       cursor: pointer;
-   }
+.display-center-line form {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+}
 
-   input[type="submit"]:hover {
-       background-color: #45a049;
-   }
+.container {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    height: 85vh;
+    width: 55vh;
+    justify-content: space-evenly;
+    text-align: center;
+    align-items: center;
+    gap: 2rem;
+}
 
-   /* Message styles */
-   .error {
-       color: #dc3545;
-       margin: 10px 0;
-   }
+.container form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
 
-   .success {
-       color: #28a745;
-       margin: 10px 0;
-   }
+.box {
+    padding: 1.5rem;
+}
+
+.input-field input {
+    line-height: 40px;
+    font-size: 1.1em;
+}
+
+.input-field {
+    padding: 1rem;
+}
+
+.blue-button {
+    font-size: 1.5em;
+    background-color: #207FEE;
+    color: white;
+    border-radius: 8px;
+    border-width: 0px;
+    width: 205px;
+    height: 64px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.subscribe-button {
+    font-size: 1.5em;
+    background-color: #F69F1D;
+    color: white;
+    border-radius: 8px;
+    border-width: 0px;
+    width: 205px;
+    height: 64px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.yellow-button {
+    font-size: 1.5em;
+    background-color: #F69F1D;
+    color: white;
+    border-radius: 8px;
+    border-width: 0px;
+    width: 151px;
+    height: 62px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.logout-link {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 50px;
+
+}
+
+.nav-right {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-left {
+    color: #333;
+}
+
+.nav-right a {
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+}
+
+.nav-right a:visited {
+    cursor: pointer;
+    color: black;
+}
+
+.nav-right a.active {
+    color: #1E90FF;
+}
+
+#looking-for-email {
+    position: relative;
+    left: -230px;
+    top: 60px;
+    font-size: 1.1em;
+
+}
+
+#looking-for-email-input-field {
+padding: 1rem;
+    line-height: 10px;
+    font-size: 1.1em;
+    width: 400px;
+
+}
+
+
+
