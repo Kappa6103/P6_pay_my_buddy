@@ -151,5 +151,109 @@ padding: 1rem;
 
 }
 
+.transfer-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    justify-content: center;
+}
+
+
+.transfer-input {
+    padding: 1rem;
+    line-height: 10px;
+    font-size: 1.1em;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+/* Remove extra padding from the box class in the form */
+.transfer-form .box {
+    padding: 0;
+}
+
+/* Optional: if you want to adjust button size to match inputs better */
+.transfer-form .blue-button {
+    height: 42px;
+    width: auto;
+    padding: 0 2rem;
+}
+
+.transaction-history {
+    width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.transaction-history caption {
+    text-align: left;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.transaction-history table {
+    width: 90%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.transaction-history th {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+    color: #333;
+}
+
+.transaction-history td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+/* Left align Relations and Description columns */
+.transaction-history th:nth-child(1),
+.transaction-history th:nth-child(2),
+.transaction-history td:nth-child(1),
+.transaction-history td:nth-child(2) {
+    text-align: left;
+}
+
+/* Right align Montant column */
+.transaction-history th:nth-child(3),
+.transaction-history td:nth-child(3) {
+    text-align: right;
+}
+
+.profile-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.profile-form label {
+    margin-right: 20px;
+}
+
+.amount-input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.currency-symbol {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.amount-input-wrapper input {
+    padding-right: 25px;
+}
+
+
+
 
 

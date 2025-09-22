@@ -26,38 +26,46 @@
     </nav>
 
     <main>
-        <div>
+        <div style="display: flex; justify-content: center; margin-top:160px">
             <form method="post" th:object="${modifyProfileDto}" th:action="@{/profil}">
                 <input type="hidden" th:field="*{currentUserId}"/>
-                <label>Username</label>
-                <div>
-                    <input th:field="*{userName}">
-                    <p th:if="${#fields.hasErrors('userName')}"
-                       th:errorclass="text-danger"
-                       th:errors="*{userName}"></p>
+
+                <div class="profile-form">
+                    <label>Username</label>
+                    <div>
+                        <input th:field="*{userName}" style="border: 0px" placeholder="@username">
+                        <p th:if="${#fields.hasErrors('userName')}"
+                           th:errorclass="text-danger"
+                           th:errors="*{userName}"></p>
+                    </div>
                 </div>
 
-                <label>Mail</label>
-                <div>
-                    <input th:field="*{email}">
-                    <p th:if="${#fields.hasErrors('email')}"
-                       th:errorclass="text-danger"
-                       th:errors="*{email}"></p>
+                <div class="profile-form">
+                    <label>Mail</label>
+                    <div>
+                        <input th:field="*{email}" style="border: 0px" placeholder="@email">
+                        <p th:if="${#fields.hasErrors('email')}"
+                           th:errorclass="text-danger"
+                           th:errors="*{email}"></p>
+                    </div>
                 </div>
 
-                <label>Password</label>
-                <div>
-                    <input class="form-control" type="password"
-                           th:field="*{password}">
-                    <p th:if="${#fields.hasErrors('password')}"
-                       th:errorclass="text-danger"
-                       th:errors="*{password}"></p>
+                <div class="profile-form">
+                    <label>Password</label>
+                    <div>
+                        <input type="password" style="border: 0px" placeholder="@pwd"
+                               th:field="*{password}">
+                        <p th:if="${#fields.hasErrors('password')}"
+                           th:errorclass="text-danger"
+                           th:errors="*{password}"></p>
+                    </div>
                 </div>
 
                 <div>
-                    <button type="submit">Modifier</button>
+                    <button type="submit" class="yellow-button" style="position: relative; left: 400px; top: -50px">Modifier</button>
                 </div>
-                <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+
+                <div th:if="${#fields.hasGlobalErrors()}">
                     <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">Error message</p>
                 </div>
             </form>
