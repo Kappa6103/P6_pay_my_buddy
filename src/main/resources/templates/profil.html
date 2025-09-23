@@ -26,14 +26,14 @@
     </nav>
 
     <main>
-        <div style="display: flex; justify-content: center; margin-top:160px">
+        <div id="profile-form">
             <form method="post" th:object="${modifyProfileDto}" th:action="@{/profil}">
                 <input type="hidden" th:field="*{currentUserId}"/>
 
                 <div class="profile-form">
                     <label>Username</label>
-                    <div>
-                        <input th:field="*{userName}" style="border: 0px" placeholder="@username">
+                    <div class="input-field">
+                        <input th:field="*{userName}" placeholder="@username" id="profile-form-username-field">
                         <p th:if="${#fields.hasErrors('userName')}"
                            th:errorclass="text-danger"
                            th:errors="*{userName}"></p>
@@ -42,8 +42,8 @@
 
                 <div class="profile-form">
                     <label>Mail</label>
-                    <div>
-                        <input th:field="*{email}" style="border: 0px" placeholder="@email">
+                    <div class="input-field">
+                        <input th:field="*{email}" placeholder="nom@domain.com" id="profile-form-email-field" >
                         <p th:if="${#fields.hasErrors('email')}"
                            th:errorclass="text-danger"
                            th:errors="*{email}"></p>
@@ -51,9 +51,9 @@
                 </div>
 
                 <div class="profile-form">
-                    <label>Password</label>
-                    <div>
-                        <input type="password" style="border: 0px" placeholder="@pwd"
+                    <label>Mot de passe</label>
+                    <div class="input-field">
+                        <input type="password" placeholder="mot de passe" id="profile-form-pwd-field"
                                th:field="*{password}">
                         <p th:if="${#fields.hasErrors('password')}"
                            th:errorclass="text-danger"
@@ -62,7 +62,7 @@
                 </div>
 
                 <div>
-                    <button type="submit" class="yellow-button" style="position: relative; left: 400px; top: -50px">Modifier</button>
+                    <button type="submit" class="yellow-button" id="profile-modifier-button">Modifier</button>
                 </div>
 
                 <div th:if="${#fields.hasGlobalErrors()}">

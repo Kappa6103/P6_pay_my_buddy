@@ -15,6 +15,7 @@ body {
     flex-direction: column;
     align-items: center;
     margin-top: 2rem;
+    position: relative;
 }
 
 .display-center-line form {
@@ -25,15 +26,27 @@ body {
 }
 
 .container {
+    position: relative;
     display: flex;
     flex-direction: column;
     border: 2px solid black;
-    height: 85vh;
-    width: 55vh;
+    height: 502.625px;
+    width: 325.229px;
     justify-content: space-evenly;
     text-align: center;
     align-items: center;
     gap: 2rem;
+    margin-top: 5vh;
+}
+
+#success-creation {
+    position: absolute;
+    top: 125px;
+}
+
+.msg-connexion {
+    position: absolute;
+    top: 130px;
 }
 
 .container form {
@@ -46,13 +59,30 @@ body {
     padding: 1.5rem;
 }
 
+.input-field {
+    position: relative;
+}
+
+.input-field p.text-danger {
+    position: absolute;
+    left: 0;
+    bottom: -20px; /* Adjust this value to control how far below the input the error appears */
+    color: red;
+    margin: 0;
+    font-size: 0.8em;
+}
+
 .input-field input {
     line-height: 40px;
     font-size: 1.1em;
 }
 
-.input-field {
-    padding: 1rem;
+.input-field-connexion {
+    margin-bottom: 30px;
+}
+
+.input-field-inscription {
+    margin-bottom: 25px;
 }
 
 .blue-button {
@@ -80,13 +110,13 @@ body {
 }
 
 .yellow-button {
-    font-size: 1.5em;
+    font-size: 1.1em;
     background-color: #F69F1D;
     color: white;
     border-radius: 8px;
     border-width: 0px;
-    width: 151px;
-    height: 62px;
+    width: 100px;
+    height: 50px;
     text-align: center;
     cursor: pointer;
 }
@@ -137,19 +167,25 @@ body {
 
 #looking-for-email {
     position: relative;
-    left: -230px;
-    top: 60px;
-    font-size: 1.1em;
-
+    left: -165px;
+    top: 45px;
 }
 
 #looking-for-email-input-field {
-padding: 1rem;
-    line-height: 10px;
+    border: 0px;
+    padding: 1rem;
+    height: 10px;
     font-size: 1.1em;
-    width: 400px;
-
+    width: 380px;
 }
+
+#looking-for-email-input-field + p.text-danger {
+    color: red;
+    position: absolute;
+    font-size: 0.8em;
+    top: 120px;
+}
+
 
 .transfer-form {
     display: flex;
@@ -229,11 +265,6 @@ padding: 1rem;
 .profile-form {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
-}
-
-.profile-form label {
-    margin-right: 20px;
 }
 
 .amount-input-wrapper {
@@ -253,7 +284,32 @@ padding: 1rem;
     padding-right: 25px;
 }
 
+#profile-form {
+    display: flex;
+    justify-content: center;
+    margin-top:160px;
+}
 
+#profile-form-email-field {
+    border: 0px;
+    position: relative;
+    right: -90px;
+}
 
+#profile-form-pwd-field {
+    border: 0px;
+    position: relative;
+    right: -15px;
+}
 
+#profile-form-username-field {
+    border: 0px;
+    position: relative;
+    right: -40px;
+}
 
+#profile-modifier-button {
+    position: relative;
+    left: 350px;
+    top: -50px
+}

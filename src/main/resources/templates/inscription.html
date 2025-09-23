@@ -8,10 +8,6 @@
 </head>
 
 <body>
-    <header>
-        <h1>Inscription page</h1>
-    </header>
-
     <main>
         <div class="display-center-class">
             <div class="container">
@@ -22,27 +18,27 @@
                     </a>
                 </div>
 
-                <div th:if="${success}" role="alert" class="box">
+                <div th:if="${success}" role="alert" id="success-creation">
                     Account Created Successfully!
                 </div>
 
                 <form method="post" th:object="${registerDto}" th:action="@{/inscription}">
 
-                    <div class="input-field">
+                    <div class="input-field input-field-inscription">
                         <input th:field="*{userName}" required placeholder="Username" minlength="4" maxlength="15">
                         <p th:if="${#fields.hasErrors('userName')}"
                            th:errorclass="text-danger"
                            th:errors="*{userName}"></p>
                     </div>
 
-                    <div class="input-field">
+                    <div class="input-field input-field-inscription">
                         <input th:field="*{email}" required placeholder="Mail">
                         <p th:if="${#fields.hasErrors('email')}"
                            th:errorclass="text-danger"
                            th:errors="*{email}"></p>
                     </div>
 
-                    <div class="input-field">
+                    <div class="input-field input-field-inscription">
                         <input th:field="*{password}" required type="password" placeholder="Mot de passe">
                         <p th:if="${#fields.hasErrors('password')}"
                            th:errorclass="text-danger"

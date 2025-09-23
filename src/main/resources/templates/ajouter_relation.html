@@ -39,12 +39,13 @@
                 <input type="hidden" th:field="*{currentUserId}"/>
                 <input type="hidden" th:field="*{currentUserEmail}"/>
 
-                <input th:field="*{email}" required placeholder="Saisir une adresse mail" id="looking-for-email-input-field">
+                <input th:field="*{email}" required placeholder="Saisir une adresse mail"
+                       id="looking-for-email-input-field">
                 <p th:if="${#fields.hasErrors('email')}"
                    th:errorclass="text-danger"
                    th:errors="*{email}"></p>
 
-                <div class="box">
+                <div id="ajouter_relation-ajouter-button">
                     <input type="submit" value="Ajouter" class="yellow-button"/>
                 </div>
 
