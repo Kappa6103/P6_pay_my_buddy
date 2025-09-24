@@ -33,6 +33,8 @@ public class ProfileController {
             @Valid @ModelAttribute ModifyProfileDto modifyProfileDto,
             BindingResult result
     ) {
+
+
         boolean hasAFieldBeenModified = false;
 
         modifyProfileDto = inputFieldsNullSetter(modifyProfileDto);
@@ -55,6 +57,17 @@ public class ProfileController {
             hasAFieldBeenModified = true;
         }
 
+        if (modifyProfileDto.getUserName().equals(modifyProfileDto.getCurrentUserName())
+                || userService.isUserNameAlreadyInUse(modifyProfileDto.getUserName())) {
+            result.addError(
+                    new FieldError(
+                            "modifyProfileDto",
+                            "userName",
+                            "Ce nom d'utilisateur est déjà utilisé"
+                    )
+            );
+        }
+
         if (result.hasErrors()) {
             return "profil";
         }
@@ -63,6 +76,7 @@ public class ProfileController {
             userService.modifyUserProfile(modifyProfileDto);
             //model.addAttribute("modifyProfileDto", userService.loadModifyProfileDto());
             model.addAttribute("success", true);
+
         } else {
             result.addError(
                     new ObjectError("modifyProfileDto",

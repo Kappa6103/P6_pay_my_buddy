@@ -8,7 +8,6 @@ import com.paymybuddy.repository.AccountRepository;
 import com.paymybuddy.repository.TransactionRepository;
 import com.paymybuddy.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -76,7 +76,6 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException();
         }
     }
-
 
     public TransactionDto loadTransactionDto() {
         TransactionDto transactionDto = new TransactionDto();
@@ -136,23 +135,6 @@ public class UserService implements UserDetailsService {
             return true;
         }
     }
-
-    //TODO: REMOVE METHOD BELOW
-
-//    public boolean verifyPresenceOfUserToAdd(String email) {
-//        Optional<AppUser> optAppUser = userRepository.findByEmail(email);
-//        AppUser appUser = null;
-//
-//        if (optAppUser.isPresent()) {
-//            appUser = optAppUser.get();
-//        }
-//
-//        if (appUser == null) {
-//            return false;
-//        } else {
-//            return true;
-//        }
-//    }
 
     @Transactional
     public void createNewUser(RegisterDto registerDto) {
@@ -229,6 +211,11 @@ public class UserService implements UserDetailsService {
     public ModifyProfileDto loadModifyProfileDto() {
         AppUser user = getCurrentUser();
         return new ModifyProfileDto(user.getUserId(), user.getUserName(), user.getEmail());
+    }
+
+    public boolean isUserNameAlreadyInUse(String userName) {
+        Optional<AppUser> optionalAppUser = userRepository.findByUserName(userName);
+        return optionalAppUser.isPresent();
     }
 
     @Transactional
