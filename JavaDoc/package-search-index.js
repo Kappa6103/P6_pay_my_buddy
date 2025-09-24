@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.paymybuddy"},{"l":"com.paymybuddy.configuration"},{"l":"com.paymybuddy.controller"},{"l":"com.paymybuddy.model"},{"l":"com.paymybuddy.model.dto"},{"l":"com.paymybuddy.repository"},{"l":"com.paymybuddy.service"}];updateSearchResults();
