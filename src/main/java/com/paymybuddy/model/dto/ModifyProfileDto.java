@@ -6,6 +6,10 @@ public class ModifyProfileDto {
 
     private int currentUserId;
 
+    private String currentUserName;
+
+    private String currentEmail;
+
     private String userName;
 
     @Email
@@ -13,8 +17,18 @@ public class ModifyProfileDto {
 
     private String password;
 
-    public ModifyProfileDto(int currentUserId) {
+    public ModifyProfileDto(int currentUserId, String currentUserName, String currentEmail) {
         this.currentUserId = currentUserId;
+        this.currentUserName = currentUserName;
+        this.currentEmail = currentEmail;
+    }
+
+    public String getCurrentUserName() {
+        return currentUserName;
+    }
+
+    public String getCurrentEmail() {
+        return currentEmail;
     }
 
     public String getUserName() {

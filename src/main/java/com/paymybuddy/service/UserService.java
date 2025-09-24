@@ -227,7 +227,8 @@ public class UserService implements UserDetailsService {
     }
 
     public ModifyProfileDto loadModifyProfileDto() {
-        return new ModifyProfileDto(getCurrentUser().getUserId());
+        AppUser user = getCurrentUser();
+        return new ModifyProfileDto(user.getUserId(), user.getUserName(), user.getEmail());
     }
 
     @Transactional

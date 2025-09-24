@@ -339,3 +339,8 @@ body {
     display: flex;
     justify-content: center;
 }
+
+#msg-profile-update {
+    display: flex;
+    justify-content: center;
+}
