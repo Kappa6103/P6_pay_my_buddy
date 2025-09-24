@@ -395,19 +395,6 @@ class UserServiceTest {
     }
 
     @Test
-    void verifyPresenceOfFriendToAddInUserFriendList_friendPresentInList_failedDBFetch_friendToAdd() {
-        //Arrange
-        appUser.setFriendsList(friendsList);
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(appUser));
-        when(userRepository.findByEmail(EMAIL_FRIEND_ONE)).thenReturn(Optional.empty());
-
-        //Act & Assert
-        assertThrows(RuntimeException.class, () -> {
-            userService.verifyPresenceOfFriendToAddInUserFriendList(USER_ID, EMAIL_FRIEND_ONE);
-        });
-    }
-
-    @Test
     void createUserRelation_successful() {
         //Arrange
         when(userRepository.findById(USER_ID)).thenReturn(Optional.of(appUser));

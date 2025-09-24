@@ -334,3 +334,8 @@ body {
 #transfer-description {
     width: 250px;
 }
+
+#msg-add-friend {
+    display: flex;
+    justify-content: center;
+}

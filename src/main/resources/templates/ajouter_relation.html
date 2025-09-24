@@ -27,9 +27,7 @@
     </nav>
 
     <main>
-        <div th:if="${success}" role="alert">
-            <strong>Relationship Created Successfully!</strong>
-        </div>
+        <div th:if="${success}" role="alert" id="msg-add-friend">Ajouté à la liste d'amis !</div>
 
         <div class="display-center-line">
             <div id="looking-for-email">

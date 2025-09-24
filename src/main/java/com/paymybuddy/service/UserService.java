@@ -194,11 +194,10 @@ public class UserService implements UserDetailsService {
 
         if (optFriendToAdd.isPresent()) {
             friendToAdd = optFriendToAdd.get();
+            return currentUser.getFriendsList().contains(friendToAdd);
         } else {
-            throw new RuntimeException();
+            return false;
         }
-
-        return currentUser.getFriendsList().contains(friendToAdd);
     }
 
     @Transactional
