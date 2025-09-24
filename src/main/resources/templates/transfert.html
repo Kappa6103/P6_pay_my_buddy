@@ -28,33 +28,31 @@
 
     <main>
 
-        <div th:if="${success}" role="alert">
-            <strong>Money Sent !</strong>
-        </div>
+        <div th:if="${success}" role="alert" id="msg-money-sent">Transfert effectué !</div>
 
         <div class="display-center-line">
 
             <form method="post" th:action="@{/transfert}" th:object="${transactionDto}" class="transfer-form">
                 <input type="hidden" th:field="*{senderId}"/>
 
-                <select th:field="*{receiverId}" class="transfer-input" required>
+                <select th:field="*{receiverId}" class="transfer-input" required id="transfer-select-relation">
                     <option value="" selected>Sélectionner une relation</option>
                     <option th:each="relation : *{relationList}"
                             th:value="${relation.userId()}"
                             th:text="${relation.userName()}"></option>
                 </select>
 
-                <input th:field="*{description}" placeholder="Description" class="transfer-input">
+                <input th:field="*{description}" placeholder="Description" class="transfer-input" id="transfer-description">
 
                 <div class="amount-input-wrapper">
                     <input type="number" name="quantity" value="1" min="1" max="10000" step="1"
-                           th:field="*{transactionAmount}" class="transfer-input">
+                           th:field="*{transactionAmount}" class="transfer-input" id="transfer-select-amount">
 
                     <span class="currency-symbol">€</span>
                 </div>
 
                 <div class="box">
-                    <button type="submit" class="blue-button">Payer</button>
+                    <button type="submit" class="blue-button" id="transfer-button-payer">Payer</button>
                 </div>
             </form>
         </div>
@@ -72,7 +70,7 @@
                 <tr th:each="transaction : ${transactionDto.getTransactionHistory()}">
                     <td th:text="${transaction.userName()}"></td>
                     <td th:text="${transaction.description()}"></td>
-                    <td th:text="${transaction.transactionAmount}"></td>
+                    <td th:text="${transaction.transactionAmount + ' €'}"></td>
                 </tr>
             </table>
         </div>

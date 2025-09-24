@@ -219,7 +219,7 @@ body {
 
 .transaction-history {
     width: 100%;
-    margin-top: 2rem;
+    margin-top: 7rem;
     display: flex;
     justify-content: center;
 }
@@ -312,4 +312,25 @@ body {
     position: relative;
     left: 350px;
     top: -50px
+}
+
+#transfer-select-relation {
+    width: 260px;
+}
+
+#transfer-select-amount {
+    width: 50px;
+}
+
+#transfer-button-payer {
+    height: 55px;
+}
+
+#msg-money-sent {
+    display: flex;
+    justify-content: center;
+}
+
+#transfer-description {
+    width: 250px;
 }
