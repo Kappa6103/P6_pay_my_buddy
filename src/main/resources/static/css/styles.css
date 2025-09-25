@@ -344,3 +344,9 @@ body {
     display: flex;
     justify-content: center;
 }
+
+.error-msg-profile {
+    display: flex;
+    justify-content: center;
+    top: -50px;
+}

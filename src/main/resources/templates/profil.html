@@ -37,7 +37,8 @@
                         <input th:field="*{userName}" th:placeholder="*{currentUserName}" id="profile-form-username-field">
                         <p th:if="${#fields.hasErrors('userName')}"
                            th:errorclass="text-danger"
-                           th:errors="*{userName}"></p>
+                           th:errors="*{userName}"
+                        class="error-msg-profile"></p>
                     </div>
                 </div>
 
@@ -47,7 +48,8 @@
                         <input th:field="*{email}" th:placeholder="*{currentEmail}" id="profile-form-email-field" >
                         <p th:if="${#fields.hasErrors('email')}"
                            th:errorclass="text-danger"
-                           th:errors="*{email}"></p>
+                           th:errors="*{email}"
+                        class="error-msg-profile"></p>
                     </div>
                 </div>
 
@@ -58,7 +60,8 @@
                                th:field="*{password}">
                         <p th:if="${#fields.hasErrors('password')}"
                            th:errorclass="text-danger"
-                           th:errors="*{password}"></p>
+                           th:errors="*{password}"
+                        class="error-msg-profile"></p>
                     </div>
                 </div>
 
