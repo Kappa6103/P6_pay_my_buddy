@@ -9,6 +9,7 @@ import com.paymybuddy.repository.TransactionRepository;
 import com.paymybuddy.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -237,6 +238,14 @@ public class UserService implements UserDetailsService {
 
         if (modifyProfileDto.getEmail() != null) {
             currentUser.setEmail(modifyProfileDto.getEmail());
+
+            Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
+            Authentication newAuth = new UsernamePasswordAuthenticationToken(
+                    modifyProfileDto.getEmail(),
+                    currentAuth.getCredentials(),
+                    currentAuth.getAuthorities()
+            );
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
 
         }
 
