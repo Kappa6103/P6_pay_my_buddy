@@ -39,7 +39,7 @@ class ProfileControllerTest {
     @Test
     void profile_shouldReturnProfileViewWithModel() throws Exception {
         //Arrange
-        ModifyProfileDto modifyProfileDto = new ModifyProfileDto(CURRENT_USER_ID_FIELD);
+        ModifyProfileDto modifyProfileDto = new ModifyProfileDto(CURRENT_USER_ID_FIELD, USERNAME_FIELD, EMAIL_FIELD);
         when(userService.loadModifyProfileDto()).thenReturn(modifyProfileDto);
 
         //Act & Assert
@@ -84,6 +84,8 @@ class ProfileControllerTest {
                         .with(user(USER_EMAIL))
                         .with(csrf())
                         .param("currentUserId", String.valueOf(CURRENT_USER_ID_FIELD))
+                        .param("currentUserName", USERNAME_FIELD)
+                        .param("currentEmail", EMAIL_FIELD)
                         .param("userName", EMPTY_FIELD)
                         .param("email", "invalid-email")
                         .param("password", EMPTY_FIELD))
@@ -100,6 +102,8 @@ class ProfileControllerTest {
                         .with(user(USER_EMAIL))
                         .with(csrf())
                         .param("currentUserId", String.valueOf(CURRENT_USER_ID_FIELD))
+                        .param("currentUserName", USERNAME_FIELD)
+                        .param("currentEmail", EMAIL_FIELD)
                         .param("userName",EMPTY_FIELD)
                         .param("email",EMAIL_FIELD)
                         .param("password", "12345"))

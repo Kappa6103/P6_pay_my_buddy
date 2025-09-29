@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Objects;
+
 @Controller
 public class ProfileController {
 
@@ -33,7 +35,6 @@ public class ProfileController {
             @Valid @ModelAttribute ModifyProfileDto modifyProfileDto,
             BindingResult result
     ) {
-
 
         boolean hasAFieldBeenModified = false;
 
@@ -57,15 +58,19 @@ public class ProfileController {
             hasAFieldBeenModified = true;
         }
 
-        if (modifyProfileDto.getUserName().equals(modifyProfileDto.getCurrentUserName())
-                || userService.isUserNameAlreadyInUse(modifyProfileDto.getUserName())) {
-            result.addError(
-                    new FieldError(
-                            "modifyProfileDto",
-                            "userName",
-                            "Ce nom d'utilisateur est déjà utilisé"
-                    )
-            );
+        if (modifyProfileDto.getUserName() != null) {
+
+            if (modifyProfileDto.getUserName().equals(modifyProfileDto.getCurrentUserName())
+                    || userService.isUserNameAlreadyInUse(modifyProfileDto.getUserName())) {
+                result.addError(
+                        new FieldError(
+                                "modifyProfileDto",
+                                "userName",
+                                "Ce nom d'utilisateur est déjà utilisé"
+                        )
+                );
+            }
+
         }
 
         if (result.hasErrors()) {
@@ -89,9 +94,9 @@ public class ProfileController {
     }
 
     private ModifyProfileDto inputFieldsNullSetter(ModifyProfileDto modifyProfileDto) {
-        final String userNameField = modifyProfileDto.getUserName().trim();
-        final String emailField = modifyProfileDto.getEmail().trim();
-        final String passwordField = modifyProfileDto.getPassword().trim();
+        final String userNameField = modifyProfileDto.getUserName();
+        final String emailField = modifyProfileDto.getEmail();
+        final String passwordField = modifyProfileDto.getPassword();
 
         if (userNameField.isBlank()) {
             modifyProfileDto.setUserName(null);

@@ -114,7 +114,7 @@ class UserServiceTest {
         addRelationDto = new AddRelationDto(USER_ID, USER_EMAIL);
         addRelationDto.setEmail(EMAIL_FRIEND_ONE);
 
-        modifyProfileDto = new ModifyProfileDto(USER_ID);
+        modifyProfileDto = new ModifyProfileDto(USER_ID, USER_USERNAME, USER_EMAIL);
 
     }
 
