@@ -53,17 +53,55 @@ Pay My Buddy is a Java Spring Boot web application that allows users to easily t
    ```bash
    mvn clean install
    ```
-
 ---
 
 ## ▶️ Running the Application
 
-1. **Start the application**
+1. **Configure the MySQL DataBase**
+
+The connection to the Database can be with environment variables or you can add this lines to the application.properties file : 
+```
+spring.datasource.username=your_username
+spring.datasource.password=your_pwd
+```
+
+You can run the application in test environment like so : 
+
+```
+#Environment Production :
+#spring.datasource.url=jdbc:mysql://localhost:3306/pay_my_buddy?serverTimezone=UTC
+
+#Environmnent Test :
+spring.datasource.url=jdbc:mysql://localhost:3306/pay_my_buddy_test?serverTimezone=UTC
+spring.sql.init.data-locations=classpath:BDD/data_test.sql
+spring.sql.init.mode=always
+```
+
+Three mock users are in the DDB, you can connect to their accounts with the credentials : 
+```
+email = "user1@gmail.com" | pwd = "password"
+email = "user2@gmail.com" | pwd = "password"
+email = "user3@gmail.com" | pwd = "password"
+
+```
+
+and production like so : 
+```
+#Environment Production :
+spring.datasource.url=jdbc:mysql://localhost:3306/pay_my_buddy?serverTimezone=UTC
+
+#Environmnent Test :
+#spring.datasource.url=jdbc:mysql://localhost:3306/pay_my_buddy_test?serverTimezone=UTC
+#spring.sql.init.data-locations=classpath:BDD/data_test.sql
+#spring.sql.init.mode=always
+```
+
+2**Start the application**
    ```bash
    mvn spring-boot:run
    ```
 
-2. **Access the application**
+3. **Access the application**
 ```bash
     URL: http://localhost:8080
 ```
