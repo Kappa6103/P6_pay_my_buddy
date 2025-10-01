@@ -46,7 +46,7 @@
                 <input th:field="*{description}" placeholder="Description" class="transfer-input" id="transfer-description">
 
                 <div class="amount-input-wrapper">
-                    <input type="number" name="quantity" value="1" min="1" max="10000" step="1"
+                    <input type="number" name="quantity" value="1" min="1" max="10000" step="1" required
                            th:field="*{transactionAmount}" class="transfer-input" id="transfer-select-amount">
 
                     <span class="currency-symbol">€</span>

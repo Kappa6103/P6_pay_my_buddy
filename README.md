@@ -71,9 +71,9 @@ Pay My Buddy is a Java Spring Boot web application that allows users to easily t
 
 ## 📁 **Physical Data Model** (PDM)
 
-<img src="BDD/schéma_de_base_de_données.png" width="600"/>
+<img src="src/main/resources/BDD/schéma_de_base_de_données.png" width="600"/>
 
-Check out the MySQL script in the folder : [BDD](./BDD)
+Check out the MySQL script in the folder : [BDD](src/main/resources/BDD)
 
 ```sql
 -- MySQL Workbench Forward Engineering
